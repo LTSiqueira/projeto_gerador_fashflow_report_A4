@@ -168,8 +168,8 @@ class CashFlowPDFGenerator:
 
         # Dados gerais do relatório
         report_data = {
-            'titulo': 'Cashflow Paper Report',
-            'subtitulo': 'day by day',
+            'titulo': 'Report Cashflow detalhado (A4)',
+            'subtitulo': 'analise dia a dia',
             'saldo_base': saldo_base,
             'data_geracao': datetime.now().strftime('%d/%m/%Y %H:%M'),
             'periodo_inicio': df_com_movimentacao['DATA'].min().strftime('%d/%m/%Y'),
