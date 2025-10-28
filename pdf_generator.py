@@ -163,10 +163,14 @@ class CashFlowPDFGenerator:
 
             dias_data.append(dia_info)
 
+        # Obter saldo base inicial (primeira linha do relatório diário)
+        saldo_base = float(df_relatorio_diario.iloc[0]['SALDO_BANCARIO'])
+
         # Dados gerais do relatório
         report_data = {
             'titulo': 'Cashflow Paper Report',
             'subtitulo': 'day by day',
+            'saldo_base': saldo_base,
             'data_geracao': datetime.now().strftime('%d/%m/%Y %H:%M'),
             'periodo_inicio': df_com_movimentacao['DATA'].min().strftime('%d/%m/%Y'),
             'periodo_fim': df_com_movimentacao['DATA'].max().strftime('%d/%m/%Y'),
