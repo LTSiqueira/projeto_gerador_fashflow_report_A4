@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/din-condensed');
+
+        /* ========================================
+           CONFIGURAÇÃO DE PÁGINA (CSS Paged Media)
+           ======================================== */
+        @page {
+            size: A4;
+            margin: 20mm 15mm;
+
+            @top-right {
+                content: "Página " counter(page);
+                font-family: 'Inter', sans-serif;
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+
+        /* Primeira página sem número */
+        @page :first {
+            @top-right {
+                content: "";
+            }
+        }
+
+        /* ========================================
+           ESTILOS GERAIS
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #333;
+        }
+
+        /* ========================================
+           HEADER DA PÁGINA
+           ======================================== */
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .header-bar {
+            width: 100%;
+            height: 15px;
+            background: #91D9A6;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-family: 'DIN Condensed', 'Arial Black', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 10pt;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .report-info {
+            font-family: 'Inter', sans-serif;
+            font-size: 8pt;
+            color: #999;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* ========================================
+           SEÇÃO DE DIA (Timeline)
+           ======================================== */
+        .day-section {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 20px;
+            margin-left: 6px;
+
+            /* IMPORTANTE: Evitar quebra de página dentro de um dia */
+            page-break-inside: avoid;
+
+            /* Se não couber na página, quebra antes */
+            orphans: 3;
+            widows: 3;
+        }
+
+        /* Bolinha verde da timeline */
+        .day-section::before {
+            content: '';
+            position: absolute;
+            left: -4.65px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            background: #91D9A6;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        /* Linha vertical da timeline */
+        .day-section::after {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 8px;
+            bottom: 0;
+            width: 0.7px;
+            background: #d0d0d0;
+            z-index: 1;
+        }
+
+        /* Última seção não precisa de linha */
+        .day-section:last-child::after {
+            display: none;
+        }
+
+        /* ========================================
+           HEADER DO DIA
+           ======================================== */
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 1px;
+            border-bottom: 1px solid #d0d0d0;
+        }
+
+        .day-date {
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            font-size: 10pt;
+            font-weight: 600;
+            color: #333;
+            flex-shrink: 1;
+            min-width: 0;
+        }
+
+        .day-total {
+            font-family: 'Barlow Semi Condensed', sans-serif;
+            font-size: 10pt;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: baseline;
+            gap: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-left: 5px;
+        }
+
+        .day-total .currency {
+            text-align: left;
+        }
+
+        .day-total .value {
+            text-align: right;
+        }
+
+        /* ========================================
+           TRANSAÇÕES (Duas colunas)
+           ======================================== */
+        .transactions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .transaction-column {
+            min-height: 30px;
+        }
+
+        .transaction-column h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 5.5pt;
+            font-weight: 500;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        /* Tabela de transações (dinâmica por dia) */
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'Inter', sans-serif;
+            font-size: 5.5pt;
+            font-weight: 500;
+            font-style: italic;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .transaction-table td {
+            padding: 2px 0;
+            vertical-align: top;
+        }
+
+        .transaction-table td.desc {
+            padding-right: 10px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .transaction-table td.currency {
+            text-align: left;
+            padding-right: 4px;
+            white-space: nowrap;
+        }
+
+        .transaction-table td.value {
+            text-align: right;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Linha de total dentro da tabela */
+        .transaction-table tr.total-row {
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .transaction-table tr.total-row td {
+            padding-top: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .transaction-table tr.total-row.total-row-negative td {
+            color: #d32f2f;
+        }
+
+        /* ========================================
+           MENSAGENS ESPECIAIS
+           ======================================== */
+        .no-transactions {
+            font-family: 'Inter', sans-serif;
+            font-size: 5pt;
+            font-style: italic;
+            color: #999;
+            padding: 3px 0;
+        }
+
+        /* ========================================
+           RODAPÉ
+           ======================================== */
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #9FCD3F;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 8pt;
+            color: #999;
+            page-break-inside: avoid;
+        }
+
+        /* ========================================
+           CONTROLES DE PAGINAÇÃO
+           ======================================== */
+
+        /* Forçar quebra de página antes de um elemento se necessário */
+        .page-break-before {
+            page-break-before: always;
+        }
+
+        /* Evitar quebra de página dentro do elemento */
+        .avoid-break {
+            page-break-inside: avoid;
+        }
+
+        /* ========================================
+           ESTILOS DE IMPRESSÃO/PDF
+           ======================================== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Garantir que cores sejam impressas */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER PRINCIPAL -->
+    <div class="page-header">
+        <div class="header-bar"></div>
+
+        <h1 class="title">{{ titulo }}</h1>
+        {% if subtitulo %}
+        <p class="subtitle">{{ subtitulo }}</p>
+        {% endif %}
+
+        <div class="report-info">
+            <div>Período: {{ periodo_inicio }} a {{ periodo_fim }}</div>
+            <div>Total de dias com movimentação: {{ total_dias }}</div>
+            <div>Gerado em: {{ data_geracao }}</div>
+        </div>
+    </div>
+
+    <!-- TIMELINE DE DIAS -->
+    {% for dia in dias %}
+    <div class="day-section">
+        <!-- Header do dia -->
+        <div class="day-header">
+            <div class="day-date">{{ dia.data }}</div>
+            <div class="day-total">
+                {% set saldo_fmt = dia.saldo_final|format_currency_accounting %}
+                <span class="currency">{{ saldo_fmt.currency }}</span>
+                <span class="value">{{ saldo_fmt.value }}</span>
+            </div>
+        </div>
+
+        <!-- Transações do dia (duas colunas) -->
+        <div class="transactions">
+            <!-- COLUNA: ENTRADAS -->
+            <div class="transaction-column">
+                <h3>Entradas</h3>
+
+                {% if dia.entradas %}
+                    <table class="transaction-table">
+                        {% for transacao in dia.entradas %}
+                        {% set valor_fmt = transacao.valor|format_currency_accounting %}
+                        <tr>
+                            <td class="desc">{{ transacao.descricao }}</td>
+                            <td class="currency">{{ valor_fmt.currency }}</td>
+                            <td class="value" style="width: {{ dia.max_width_entradas }}ch;">{{ valor_fmt.value }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="total-row">
+                            <td class="desc"></td>
+                            {% set total_fmt = dia.total_entradas|format_currency_accounting %}
+                            <td class="currency total-currency">{{ total_fmt.currency }}</td>
+                            <td class="value total-value" style="width: {{ dia.max_width_entradas }}ch;">{{ total_fmt.value }}</td>
+                        </tr>
+                    </table>
+                {% else %}
+                    <div class="no-transactions">Nenhuma entrada registrada neste dia</div>
+                {% endif %}
+            </div>
+
+            <!-- COLUNA: SAÍDAS -->
+            <div class="transaction-column">
+                <h3>Saídas</h3>
+
+                {% if dia.saidas %}
+                    <table class="transaction-table">
+                        {% for transacao in dia.saidas %}
+                        {% set valor_fmt = transacao.valor|format_currency_accounting %}
+                        <tr>
+                            <td class="desc">{{ transacao.descricao }}</td>
+                            <td class="currency">{{ valor_fmt.currency }}</td>
+                            <td class="value" style="width: {{ dia.max_width_saidas }}ch;">{{ valor_fmt.value }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="total-row total-row-negative">
+                            <td class="desc"></td>
+                            {% set total_fmt = dia.total_saidas|format_currency_accounting %}
+                            <td class="currency total-currency">- {{ total_fmt.currency }}</td>
+                            <td class="value total-value" style="width: {{ dia.max_width_saidas }}ch;">{{ total_fmt.value }}</td>
+                        </tr>
+                    </table>
+                {% else %}
+                    <div class="no-transactions">Nenhuma saída registrada neste dia</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- RODAPÉ -->
+    <div class="footer">
+        <p>Relatório gerado automaticamente por FluxoCaixaProcessor</p>
+        <p>© {{ data_geracao[:4] }} - Todos os direitos reservados</p>
+    </div>
+</body>
+</html>
