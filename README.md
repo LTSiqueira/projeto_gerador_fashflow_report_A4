@@ -125,6 +125,20 @@ Edite o arquivo `gerador.py`:
 
 ## Solução de Problemas
 
+### Erro "Fontconfig error: Cannot load default config file"
+
+**Problema**: Ao executar `python gerador.py`, você vê:
+```
+Fontconfig error: Cannot load default config file: No such file: (null)
+```
+
+**Solução**: Este erro foi corrigido automaticamente no código! O arquivo `pdf_generator.py` agora:
+- Cria automaticamente um arquivo de configuração do Fontconfig
+- Configura as variáveis de ambiente necessárias no Windows
+- Suprime os warnings desnecessários
+
+O PDF será gerado normalmente, mesmo com esta mensagem (se ainda aparecer, pode ser ignorada).
+
 ### Erro ao instalar WeasyPrint no Windows
 
 **Problema**: `OSError: cannot load library 'gobject-2.0-0'`

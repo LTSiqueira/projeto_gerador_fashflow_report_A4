@@ -60,7 +60,7 @@
             top: -20mm;
             left: -15mm;
             right: -15mm;
-            height: 15px;
+            height: 12px;
             background: #A7D13E;
         }
 
@@ -87,7 +87,7 @@
 
         .subtitle {
             font-family: 'Inter', sans-serif;
-            font-size: 10pt;
+            font-size: 8.5pt;
             color: #666;
             font-style: italic;
             margin-bottom: 0;
@@ -100,7 +100,7 @@
         }
 
         .logo-container {
-            margin-bottom: 12px;
+            margin-bottom: 30px;
             text-align: right;
         }
 
@@ -110,12 +110,11 @@
         }
 
         .saldo-base-box {
-            background: #f5f5f5;
-            border: 1.5px solid #888;
-            border-radius: 6px;
-            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1.5px;
             text-align: right;
-            min-width: 180px;
         }
 
         .saldo-base-label {
@@ -123,7 +122,6 @@
             font-size: 7pt;
             font-weight: 500;
             color: #666;
-            margin-bottom: 3px;
         }
 
         .saldo-base-value {
@@ -143,7 +141,7 @@
 
         .report-info {
             font-family: 'Inter', sans-serif;
-            font-size: 8pt;
+            font-size: 6.5pt;
             color: #999;
             margin-top: 15px;
         }
@@ -151,8 +149,8 @@
         .report-info-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
+            gap: 5px;
+            margin-bottom: 3px;
         }
 
         .report-info-item:last-child {
@@ -160,10 +158,55 @@
         }
 
         .report-info-item svg {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             flex-shrink: 0;
             fill: #91D9A6;
+        }
+
+        /* Estilos para alerta com cores condicionais */
+        .report-info-item.alerta-item {
+            font-weight: 600;
+        }
+
+        .alerta-item.alerta-saldo-excelente svg {
+            fill: #91D9A6;
+        }
+
+        .alerta-item.alerta-saldo-excelente span {
+            color: #91D9A6;
+        }
+
+        .alerta-item.alerta-saldo-bom svg {
+            fill: #FFE295;
+        }
+
+        .alerta-item.alerta-saldo-bom span {
+            color: #D4A60D;
+        }
+
+        .alerta-item.alerta-saldo-atencao svg {
+            fill: #FBBD89;
+        }
+
+        .alerta-item.alerta-saldo-atencao span {
+            color: #E07A2B;
+        }
+
+        .alerta-item.alerta-saldo-critico svg {
+            fill: #F68C90;
+        }
+
+        .alerta-item.alerta-saldo-critico span {
+            color: #E63946;
+        }
+
+        .alerta-item.alerta-saldo-negativo svg {
+            fill: #E73338;
+        }
+
+        .alerta-item.alerta-saldo-negativo span {
+            color: #E73338;
         }
 
         /* ========================================
@@ -194,6 +237,27 @@
             background: #91D9A6;
             border-radius: 50%;
             z-index: 2;
+        }
+
+        /* Cores condicionais baseadas no saldo */
+        .day-section.saldo-excelente::before {
+            background: #91D9A6; /* Verde - saldo >= 15M */
+        }
+
+        .day-section.saldo-bom::before {
+            background: #FFE295; /* Amarelo claro - 10M <= saldo < 15M */
+        }
+
+        .day-section.saldo-atencao::before {
+            background: #FBBD89; /* Laranja claro - 5M < saldo < 10M */
+        }
+
+        .day-section.saldo-critico::before {
+            background: #F68C90; /* Vermelho claro - 0 < saldo <= 5M */
+        }
+
+        .day-section.saldo-negativo::before {
+            background: #E73338; /* Vermelho forte - saldo < 0 */
         }
 
         /* Linha vertical da timeline */
@@ -227,7 +291,7 @@
 
         .day-date {
             font-family: 'Barlow Semi Condensed', sans-serif;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 600;
             color: #333;
             flex-shrink: 1;
@@ -236,7 +300,7 @@
 
         .day-total {
             font-family: 'Barlow Semi Condensed', sans-serif;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 600;
             color: #333;
             display: flex;
@@ -405,16 +469,18 @@
                     </div>
                     <div class="report-info-item">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M3.5 18.5l6-6 4 4L22 6.92 20.59 5.5l-7.09 8-4-4L2 17l1.5 1.5z"/>
-                        </svg>
-                        <span>Total de dias com movimentação: 160</span>
-                    </div>
-                    <div class="report-info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
                         </svg>
-                        <span>Gerado em: 28/10/2025 18:24</span>
+                        <span>Atualizado em: 28/10/2025 11:10h</span>
                     </div>
+                    
+                    <div class="report-info-item alerta-item alerta-saldo-atencao">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                        <span>Há data(s) abaixo de R$ 10 Milhões!</span>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -461,7 +527,7 @@
 
     <!-- TIMELINE DE DIAS -->
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">28/10/2025</div>
@@ -483,7 +549,7 @@
                         
                         
                         <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | 4706</td>
+                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4706</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">652.500,00</td>
                         </tr>
@@ -508,14 +574,14 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">171.751,70</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OCP FERTILIZANTES LTDA | 814</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OCP FERTILIZANTES LTDA | PC 814</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">302.310,00</td>
                         </tr>
                         
@@ -531,7 +597,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">29/10/2025</div>
@@ -563,21 +629,21 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">858.416,43</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | 801</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 801</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">35.430,60</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | 800</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 800</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">38.327,08</td>
                         </tr>
                         
@@ -593,7 +659,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/10/2025</div>
@@ -615,189 +681,189 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4581</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4581</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">160.848,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SIVIERO E CIA LTDA | 4590</td>
+                            <td class="desc">SIVIERO E CIA LTDA | PV 4590</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">64.600,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SIVIERO E CIA LTDA | 4591</td>
+                            <td class="desc">SIVIERO E CIA LTDA | PV 4591</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">24.360,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SEMPRE VERDE FLORESTAS E AGRICULTURA LTDA | 4654</td>
+                            <td class="desc">SEMPRE VERDE FLORESTAS E AGRICULTURA LTDA | PV 4654</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">205.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | 4482</td>
+                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | PV 4482</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">50.616,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">PAULO ROGERIO DE MORAIS MACHADO | 4122</td>
+                            <td class="desc">PAULO ROGERIO DE MORAIS MACHADO | PV 4122</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">2.545.177,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">PAULO ROGERIO DE MORAIS MACHADO | 4123</td>
+                            <td class="desc">PAULO ROGERIO DE MORAIS MACHADO | PV 4123</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">2.380.972,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 3950</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 3950</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">4.860.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4587</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4587</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">116.380,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">CARLOS ERNESTO AUGUSTIN | 4680</td>
+                            <td class="desc">CARLOS ERNESTO AUGUSTIN | PV 4680</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">709.777,20</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4479</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4479</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">134.912,25</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4583</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4583</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">374.440,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4477</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4477</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.446.845,40</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4341</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4341</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">310.371,60</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4322</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4322</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.448.400,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | 4478</td>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4478</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">404.736,75</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | 4476</td>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4476</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">809.473,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | 4321</td>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4321</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.241.486,40</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | 4320</td>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4320</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">413.828,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | 4311</td>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4311</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">295.860,72</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4547</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4547</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">100.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | 4638</td>
+                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4638</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">102.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4588</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4588</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">227.700,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">CELIA STORCH KLEIN E OUTROS | 4625</td>
+                            <td class="desc">CELIA STORCH KLEIN E OUTROS | PV 4625</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">98.082,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | 4537</td>
+                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4537</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">4.353.264,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4637</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4637</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">125.440,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4631</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4631</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">382.500,00</td>
                         </tr>
@@ -821,50 +887,50 @@
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | 780</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 780</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">104.488,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | 779</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 779</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">208.606,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | 786</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 786</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">132.624,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | 799</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 799</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">68.523,60</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | 805</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 805</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">172.809,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | 781</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 781</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">207.792,00</td>
                         </tr>
                         
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.501.822,53</td>
                         </tr>
                         
@@ -880,7 +946,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">31/10/2025</div>
@@ -912,7 +978,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">568.352,28</td>
                         </tr>
                         
@@ -928,7 +994,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">01/11/2025</div>
@@ -960,7 +1026,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.185.690,92</td>
                         </tr>
                         
@@ -976,7 +1042,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">02/11/2025</div>
@@ -1008,7 +1074,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">256.087,90</td>
                         </tr>
                         
@@ -1024,7 +1090,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">03/11/2025</div>
@@ -1056,14 +1122,14 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">890.718,84</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ALLIED HARVEST (ASIA) COMPANY LIMITED | 788</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ALLIED HARVEST (ASIA) COMPANY LIMITED | PC 788</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">4.702.600,00</td>
                         </tr>
                         
@@ -1079,7 +1145,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">04/11/2025</div>
@@ -1111,7 +1177,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">137.899,80</td>
                         </tr>
                         
@@ -1127,7 +1193,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">05/11/2025</div>
@@ -1149,14 +1215,14 @@
                         
                         
                         <tr>
-                            <td class="desc">ANDRE TRIPOLONI | 4696</td>
+                            <td class="desc">ANDRE TRIPOLONI | PV 4696</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">1.332.851,20</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">TRIM FLORESTAL S.A. | 4690</td>
+                            <td class="desc">TRIM FLORESTAL S.A. | PV 4690</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">815.680,00</td>
                         </tr>
@@ -1180,22 +1246,22 @@
                         
                         
                         <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | 811</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 811</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">638.176,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ELEVA QUIMICA LTDA | 812</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ELEVA QUIMICA LTDA | PC 812</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.300.604,80</td>
                         </tr>
                         
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">875.684,84</td>
                         </tr>
                         
@@ -1211,7 +1277,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">06/11/2025</div>
@@ -1243,7 +1309,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">223.175,00</td>
                         </tr>
                         
@@ -1259,7 +1325,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">07/11/2025</div>
@@ -1281,14 +1347,14 @@
                         
                         
                         <tr>
-                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | 4629</td>
+                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | PV 4629</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 9ch;">25.080,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | 4630</td>
+                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | PV 4630</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 9ch;">22.050,00</td>
                         </tr>
@@ -1313,7 +1379,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">151.833,70</td>
                         </tr>
                         
@@ -1329,7 +1395,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/11/2025</div>
@@ -1360,15 +1426,15 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 806</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 806</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.956.281,60</td>
                         </tr>
                         
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">181.552,56</td>
                         </tr>
                         
@@ -1384,7 +1450,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/11/2025</div>
@@ -1416,7 +1482,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">690.690,45</td>
                         </tr>
                         
@@ -1432,7 +1498,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">11/11/2025</div>
@@ -1464,7 +1530,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">116.768,35</td>
                         </tr>
                         
@@ -1480,7 +1546,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">12/11/2025</div>
@@ -1512,7 +1578,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">610,88</td>
                         </tr>
                         
@@ -1528,7 +1594,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">14/11/2025</div>
@@ -1550,14 +1616,14 @@
                         
                         
                         <tr>
-                            <td class="desc">VALDIR ROQUE JACOBOWSKI E OUTROS | 4682</td>
+                            <td class="desc">VALDIR ROQUE JACOBOWSKI E OUTROS | PV 4682</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">154.266,78</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GLOBAL PECUARIA LTDA | 4662</td>
+                            <td class="desc">GLOBAL PECUARIA LTDA | PV 4662</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">164.069,68</td>
                         </tr>
@@ -1582,14 +1648,14 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">73.179,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | 807</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 807</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">131.565,31</td>
                         </tr>
                         
@@ -1605,7 +1671,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">15/11/2025</div>
@@ -1627,63 +1693,63 @@
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 4520</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4520</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">2.040.594,14</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 4514</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4514</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">292.665,29</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 3927</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3927</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">1.658.487,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 4533</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4533</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">500.065,60</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 3955</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3955</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">73.330,65</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 3928</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3928</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">416.137,50</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | 4364</td>
+                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 4364</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">346.222,96</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | 3854</td>
+                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3854</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">91.163,52</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | 3852</td>
+                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3852</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">51.143,82</td>
                         </tr>
@@ -1708,7 +1774,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.350.230,98</td>
                         </tr>
                         
@@ -1724,7 +1790,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">16/11/2025</div>
@@ -1756,7 +1822,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">126.982,39</td>
                         </tr>
                         
@@ -1772,7 +1838,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">17/11/2025</div>
@@ -1794,7 +1860,7 @@
                         
                         
                         <tr>
-                            <td class="desc">MONTANA INDUSTRIA E COMERCIO DE SUPLEMENTOS MINERAIS E RACOES LTDA | 4548</td>
+                            <td class="desc">MONTANA INDUSTRIA E COMERCIO DE SUPLEMENTOS MINERAIS E RACOES LTDA | PV 4548</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 9ch;">41.563,33</td>
                         </tr>
@@ -1819,7 +1885,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">1.098,04</td>
                         </tr>
                         
@@ -1835,7 +1901,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/11/2025</div>
@@ -1857,7 +1923,7 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4669</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4669</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">128.000,00</td>
                         </tr>
@@ -1882,7 +1948,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">229.703,47</td>
                         </tr>
                         
@@ -1898,7 +1964,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/11/2025</div>
@@ -1920,14 +1986,14 @@
                         
                         
                         <tr>
-                            <td class="desc">DONATO BIANCHI GODOY | 4692</td>
+                            <td class="desc">DONATO BIANCHI GODOY | PV 4692</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">43.750,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARIA DE LOURDES BITTENCOURT PEDROSA BARBOSA COELHO | 4691</td>
+                            <td class="desc">MARIA DE LOURDES BITTENCOURT PEDROSA BARBOSA COELHO | PV 4691</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">87.500,00</td>
                         </tr>
@@ -1952,7 +2018,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.498.052,82</td>
                         </tr>
                         
@@ -1968,7 +2034,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">23/11/2025</div>
@@ -1999,15 +2065,15 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 803</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 803</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">937.832,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 776</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 776</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">4.689.164,00</td>
                         </tr>
                         
@@ -2023,7 +2089,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">24/11/2025</div>
@@ -2055,7 +2121,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">443.229,80</td>
                         </tr>
                         
@@ -2071,7 +2137,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">25/11/2025</div>
@@ -2103,7 +2169,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">3.263,00</td>
                         </tr>
                         
@@ -2119,7 +2185,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">27/11/2025</div>
@@ -2151,7 +2217,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">4.460,00</td>
                         </tr>
                         
@@ -2167,7 +2233,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">28/11/2025</div>
@@ -2189,182 +2255,182 @@
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4394</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4394</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">91.101,11</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4509</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4509</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">6.664.256,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ERNESTO MARTELLI | 4386</td>
+                            <td class="desc">ERNESTO MARTELLI | PV 4386</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">608.833,53</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | 4482</td>
+                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | PV 4482</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">50.616,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">CAAP-COOPERATIVA ALIANCA DOS PRODUTORES DO PARECIS | 4233</td>
+                            <td class="desc">CAAP-COOPERATIVA ALIANCA DOS PRODUTORES DO PARECIS | PV 4233</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.676.812,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4393</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4393</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">231.893,73</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ERNESTO MARTELLI | 4385</td>
+                            <td class="desc">ERNESTO MARTELLI | PV 4385</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">305.781,86</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4392</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4392</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">165.638,38</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4390</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4390</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">99.383,02</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">VITORIO HERKLOTZ E OUTROS | 4384</td>
+                            <td class="desc">VITORIO HERKLOTZ E OUTROS | PV 4384</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">928.266,37</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | 3956</td>
+                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | PV 3956</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">837.480,65</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | 4703</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4703</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">351.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4632</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4632</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">90.892,06</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4585</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4585</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">6.397.685,76</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4644</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4644</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">126.396,16</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4586</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4586</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">94.456,88</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4685</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4685</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">87.182,18</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4686</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4686</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">61.223,14</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4689</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4689</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">371.988,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4626</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4626</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">118.494,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4671</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4671</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">90.892,06</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">JUNIOR MASANOBU UTIDA E OUTROS | 4215</td>
+                            <td class="desc">JUNIOR MASANOBU UTIDA E OUTROS | PV 4215</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.676.812,80</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4378</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4378</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">747.981,36</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4379</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4379</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">334.623,24</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4391</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4391</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">364.404,42</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4642</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4642</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">89.037,12</td>
                         </tr>
@@ -2389,14 +2455,14 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">377.684,14</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 748</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 748</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">5.240.040,00</td>
                         </tr>
                         
@@ -2412,7 +2478,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/11/2025</div>
@@ -2434,49 +2500,49 @@
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4264</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4264</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">292.313,62</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4243</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4243</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.827.296,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | 3835</td>
+                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | PV 3835</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">527.709,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ITACIR JOSE PICININ E OUTRO | 4247</td>
+                            <td class="desc">ITACIR JOSE PICININ E OUTRO | PV 4247</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">1.370.472,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | 4281</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4281</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">255.069,02</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">DARCI AGOSTINHO BOFF E OUTROS | 4657</td>
+                            <td class="desc">DARCI AGOSTINHO BOFF E OUTROS | PV 4657</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">211.536,38</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 3933</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 3933</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">8.225.000,00</td>
                         </tr>
@@ -2501,7 +2567,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.444.149,00</td>
                         </tr>
                         
@@ -2517,7 +2583,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">01/12/2025</div>
@@ -2549,7 +2615,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">17.447,74</td>
                         </tr>
                         
@@ -2565,7 +2631,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">02/12/2025</div>
@@ -2597,7 +2663,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">10.730,00</td>
                         </tr>
                         
@@ -2613,7 +2679,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">03/12/2025</div>
@@ -2645,7 +2711,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">4.397,25</td>
                         </tr>
                         
@@ -2661,7 +2727,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">05/12/2025</div>
@@ -2693,7 +2759,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">20.683,36</td>
                         </tr>
                         
@@ -2709,7 +2775,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">06/12/2025</div>
@@ -2741,7 +2807,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">80.956,25</td>
                         </tr>
                         
@@ -2757,7 +2823,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/12/2025</div>
@@ -2779,42 +2845,42 @@
                         
                         
                         <tr>
-                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | 4630</td>
+                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | PV 4630</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">22.050,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4525</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4525</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">71.935,40</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4522</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4522</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">11.094,10</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4523</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4523</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">59.116,14</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4524</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4524</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">9.168,25</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | 4629</td>
+                            <td class="desc">RURAL AGRO SOLUCOES RACOES E SERVICOS LTDA | PV 4629</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">25.080,00</td>
                         </tr>
@@ -2839,7 +2905,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -2855,7 +2921,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/12/2025</div>
@@ -2877,7 +2943,7 @@
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | 4606</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4606</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">147.325,74</td>
                         </tr>
@@ -2902,7 +2968,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">78.056,55</td>
                         </tr>
                         
@@ -2918,7 +2984,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">11/12/2025</div>
@@ -2950,7 +3016,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">18.140,00</td>
                         </tr>
                         
@@ -2966,7 +3032,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">12/12/2025</div>
@@ -2998,7 +3064,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.176.972,45</td>
                         </tr>
                         
@@ -3014,7 +3080,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">15/12/2025</div>
@@ -3036,14 +3102,14 @@
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4549</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4549</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">263.124,02</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MONTANA INDUSTRIA E COMERCIO DE SUPLEMENTOS MINERAIS E RACOES LTDA | 4548</td>
+                            <td class="desc">MONTANA INDUSTRIA E COMERCIO DE SUPLEMENTOS MINERAIS E RACOES LTDA | PV 4548</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">41.563,34</td>
                         </tr>
@@ -3067,43 +3133,43 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 793</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 793</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">3.708.336,00</td>
                         </tr>
                         
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">1.350.230,98</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 813</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 813</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">4.568.240,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 796</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 796</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">9.270.840,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 795</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 795</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">9.270.840,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | 792</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">ENBEL S.A. | PC 792</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 13ch;">5.562.504,00</td>
                         </tr>
                         
@@ -3119,7 +3185,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">16/12/2025</div>
@@ -3151,7 +3217,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">170,00</td>
                         </tr>
                         
@@ -3167,7 +3233,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">17/12/2025</div>
@@ -3189,14 +3255,14 @@
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4560</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4560</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">130.050,56</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4559</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4559</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">131.218,65</td>
                         </tr>
@@ -3222,7 +3288,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">18/12/2025</div>
@@ -3244,21 +3310,21 @@
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4571</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4571</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">107.200,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4572</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4572</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">44.740,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | 4573</td>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4573</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">36.960,00</td>
                         </tr>
@@ -3283,7 +3349,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">172.469,87</td>
                         </tr>
                         
@@ -3299,7 +3365,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">19/12/2025</div>
@@ -3331,7 +3397,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">90.751,90</td>
                         </tr>
                         
@@ -3347,7 +3413,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/12/2025</div>
@@ -3379,7 +3445,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">93.540,00</td>
                         </tr>
                         
@@ -3395,7 +3461,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/12/2025</div>
@@ -3417,7 +3483,7 @@
                         
                         
                         <tr>
-                            <td class="desc">DONATO BIANCHI GODOY | 4692</td>
+                            <td class="desc">DONATO BIANCHI GODOY | PV 4692</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 9ch;">43.750,00</td>
                         </tr>
@@ -3442,7 +3508,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">30.399,90</td>
                         </tr>
                         
@@ -3458,7 +3524,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">24/12/2025</div>
@@ -3490,7 +3556,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">419.949,65</td>
                         </tr>
                         
@@ -3506,7 +3572,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">26/12/2025</div>
@@ -3538,7 +3604,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">963,00</td>
                         </tr>
                         
@@ -3554,7 +3620,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">28/12/2025</div>
@@ -3586,7 +3652,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">14.998,16</td>
                         </tr>
                         
@@ -3602,7 +3668,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">29/12/2025</div>
@@ -3634,7 +3700,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">23.000,00</td>
                         </tr>
                         
@@ -3650,7 +3716,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/12/2025</div>
@@ -3672,28 +3738,28 @@
                         
                         
                         <tr>
-                            <td class="desc">ORLANDO GRESSLER | 3103</td>
+                            <td class="desc">ORLANDO GRESSLER | PV 3103</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">113.216,67</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">125.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL AMAMBAI COOPERSA | 4651</td>
+                            <td class="desc">COOPERATIVA AGROINDUSTRIAL AMAMBAI COOPERSA | PV 4651</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">120.620,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL AMAMBAI COOPERSA | 4641</td>
+                            <td class="desc">COOPERATIVA AGROINDUSTRIAL AMAMBAI COOPERSA | PV 4641</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">361.860,00</td>
                         </tr>
@@ -3718,7 +3784,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.023.860,69</td>
                         </tr>
                         
@@ -3734,7 +3800,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">02/01/2026</div>
@@ -3766,7 +3832,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">10.730,00</td>
                         </tr>
                         
@@ -3782,7 +3848,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">04/01/2026</div>
@@ -3814,7 +3880,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">403.080,00</td>
                         </tr>
                         
@@ -3830,7 +3896,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">05/01/2026</div>
@@ -3862,7 +3928,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">911,50</td>
                         </tr>
                         
@@ -3878,7 +3944,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">07/01/2026</div>
@@ -3910,7 +3976,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">403.080,00</td>
                         </tr>
                         
@@ -3926,7 +3992,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/01/2026</div>
@@ -3958,7 +4024,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.853,60</td>
                         </tr>
                         
@@ -3974,7 +4040,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">09/01/2026</div>
@@ -3996,112 +4062,112 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4354</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4354</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">676.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4353</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4353</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">55.770,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4355</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4355</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">304.200,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4351</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4351</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">187.590,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4352</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4352</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">20.280,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4357</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4357</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">192.660,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4204</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4204</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">845.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4356</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4356</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">101.400,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4202</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4202</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">338.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4203</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4203</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">591.500,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4206</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4206</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">54.080,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4208</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4208</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">67.600,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4209</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4209</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">3.042.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4217</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4217</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">6.912.100,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4207</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4207</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">608.400,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | 4205</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4205</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 13ch;">263.640,00</td>
                         </tr>
@@ -4127,7 +4193,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/01/2026</div>
@@ -4159,7 +4225,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">9.177,10</td>
                         </tr>
                         
@@ -4175,7 +4241,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">11/01/2026</div>
@@ -4207,7 +4273,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.293.534,65</td>
                         </tr>
                         
@@ -4223,7 +4289,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">14/01/2026</div>
@@ -4254,22 +4320,22 @@
                         
                         
                         <tr>
-                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | 726</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 726</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">638.349,73</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | 802</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 802</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">434.251,52</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | 725</td>
-                            <td class="currency">R$</td>
+                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 725</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">4.939.611,04</td>
                         </tr>
                         
@@ -4285,7 +4351,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">17/01/2026</div>
@@ -4317,7 +4383,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.370.472,00</td>
                         </tr>
                         
@@ -4333,7 +4399,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">19/01/2026</div>
@@ -4365,7 +4431,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 5ch;">43,17</td>
                         </tr>
                         
@@ -4381,7 +4447,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/01/2026</div>
@@ -4413,7 +4479,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -4429,7 +4495,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/01/2026</div>
@@ -4461,7 +4527,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -4477,7 +4543,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">28/01/2026</div>
@@ -4509,7 +4575,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">52.273,84</td>
                         </tr>
                         
@@ -4525,7 +4591,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/01/2026</div>
@@ -4547,21 +4613,21 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | 4399</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4399</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">1.410.780,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">74.000,00</td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 12ch;">126.000,00</td>
                         </tr>
@@ -4586,7 +4652,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.000.000,00</td>
                         </tr>
                         
@@ -4602,7 +4668,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">01/02/2026</div>
@@ -4634,7 +4700,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">4.137,42</td>
                         </tr>
                         
@@ -4650,7 +4716,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">02/02/2026</div>
@@ -4682,7 +4748,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">10.730,00</td>
                         </tr>
                         
@@ -4698,7 +4764,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/02/2026</div>
@@ -4730,7 +4796,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -4746,7 +4812,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/02/2026</div>
@@ -4778,7 +4844,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">6.142,10</td>
                         </tr>
                         
@@ -4794,7 +4860,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">19/02/2026</div>
@@ -4826,7 +4892,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 5ch;">43,17</td>
                         </tr>
                         
@@ -4842,7 +4908,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/02/2026</div>
@@ -4874,7 +4940,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -4890,7 +4956,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/02/2026</div>
@@ -4922,7 +4988,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -4938,7 +5004,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">27/02/2026</div>
@@ -4960,7 +5026,7 @@
                         
                         
                         <tr>
-                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | 4705</td>
+                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | PV 4705</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">429.952,00</td>
                         </tr>
@@ -4986,7 +5052,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">28/02/2026</div>
@@ -5008,7 +5074,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -5033,7 +5099,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">52.273,84</td>
                         </tr>
                         
@@ -5049,7 +5115,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">02/03/2026</div>
@@ -5081,7 +5147,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 9ch;">10.730,00</td>
                         </tr>
                         
@@ -5097,7 +5163,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/03/2026</div>
@@ -5129,7 +5195,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -5145,7 +5211,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/03/2026</div>
@@ -5177,7 +5243,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">6.142,10</td>
                         </tr>
                         
@@ -5193,7 +5259,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">19/03/2026</div>
@@ -5225,7 +5291,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 5ch;">43,17</td>
                         </tr>
                         
@@ -5241,7 +5307,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/03/2026</div>
@@ -5273,7 +5339,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -5289,7 +5355,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/03/2026</div>
@@ -5321,7 +5387,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -5337,7 +5403,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/03/2026</div>
@@ -5359,7 +5425,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -5385,7 +5451,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/04/2026</div>
@@ -5417,7 +5483,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -5433,7 +5499,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/04/2026</div>
@@ -5465,7 +5531,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">6.142,10</td>
                         </tr>
                         
@@ -5481,7 +5547,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">19/04/2026</div>
@@ -5513,7 +5579,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 5ch;">43,17</td>
                         </tr>
                         
@@ -5529,7 +5595,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/04/2026</div>
@@ -5561,7 +5627,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -5577,7 +5643,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/04/2026</div>
@@ -5609,7 +5675,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -5625,7 +5691,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/04/2026</div>
@@ -5647,7 +5713,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -5673,7 +5739,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/05/2026</div>
@@ -5705,7 +5771,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -5721,7 +5787,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/05/2026</div>
@@ -5753,7 +5819,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -5769,7 +5835,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/05/2026</div>
@@ -5801,7 +5867,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -5817,7 +5883,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/05/2026</div>
@@ -5849,7 +5915,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.443.966,54</td>
                         </tr>
                         
@@ -5865,7 +5931,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/05/2026</div>
@@ -5887,7 +5953,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -5913,7 +5979,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/06/2026</div>
@@ -5945,7 +6011,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -5961,7 +6027,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/06/2026</div>
@@ -5993,7 +6059,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -6009,7 +6075,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/06/2026</div>
@@ -6041,7 +6107,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -6057,7 +6123,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/06/2026</div>
@@ -6089,7 +6155,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -6105,7 +6171,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/06/2026</div>
@@ -6127,7 +6193,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -6153,7 +6219,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/07/2026</div>
@@ -6185,7 +6251,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -6201,7 +6267,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/07/2026</div>
@@ -6233,7 +6299,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -6249,7 +6315,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/07/2026</div>
@@ -6281,7 +6347,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -6297,7 +6363,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/07/2026</div>
@@ -6329,7 +6395,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -6345,7 +6411,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/07/2026</div>
@@ -6367,7 +6433,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 10ch;">200.000,00</td>
                         </tr>
@@ -6393,7 +6459,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/08/2026</div>
@@ -6425,7 +6491,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -6441,7 +6507,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/08/2026</div>
@@ -6473,7 +6539,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -6489,7 +6555,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/08/2026</div>
@@ -6521,7 +6587,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -6537,7 +6603,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/08/2026</div>
@@ -6569,7 +6635,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -6585,7 +6651,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">30/08/2026</div>
@@ -6607,7 +6673,7 @@
                         
                         
                         <tr>
-                            <td class="desc">NOVATEX | MUTUO</td>
+                            <td class="desc">NOVATEX | PV MUTUO</td>
                             <td class="currency">R$</td>
                             <td class="value" style="width: 9ch;">61.200,00</td>
                         </tr>
@@ -6633,7 +6699,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/09/2026</div>
@@ -6665,7 +6731,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -6681,7 +6747,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/09/2026</div>
@@ -6713,7 +6779,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -6729,7 +6795,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/09/2026</div>
@@ -6761,7 +6827,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -6777,7 +6843,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/09/2026</div>
@@ -6809,7 +6875,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 6ch;">300,00</td>
                         </tr>
                         
@@ -6825,7 +6891,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/10/2026</div>
@@ -6857,7 +6923,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -6873,7 +6939,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/10/2026</div>
@@ -6905,7 +6971,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -6921,7 +6987,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/10/2026</div>
@@ -6953,7 +7019,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -6969,7 +7035,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/11/2026</div>
@@ -7001,7 +7067,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7017,7 +7083,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/11/2026</div>
@@ -7049,7 +7115,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7065,7 +7131,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/11/2026</div>
@@ -7097,7 +7163,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -7113,7 +7179,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">23/11/2026</div>
@@ -7145,7 +7211,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.401.133,87</td>
                         </tr>
                         
@@ -7161,7 +7227,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/12/2026</div>
@@ -7193,7 +7259,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7209,7 +7275,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/12/2026</div>
@@ -7241,7 +7307,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7257,7 +7323,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">20/12/2026</div>
@@ -7289,7 +7355,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 10ch;">333.333,33</td>
                         </tr>
                         
@@ -7305,7 +7371,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/01/2027</div>
@@ -7337,7 +7403,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7353,7 +7419,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/01/2027</div>
@@ -7385,7 +7451,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7401,7 +7467,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/02/2027</div>
@@ -7433,7 +7499,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7449,7 +7515,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/02/2027</div>
@@ -7481,7 +7547,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7497,7 +7563,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/03/2027</div>
@@ -7529,7 +7595,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7545,7 +7611,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/03/2027</div>
@@ -7577,7 +7643,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7593,7 +7659,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/04/2027</div>
@@ -7625,7 +7691,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7641,7 +7707,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/04/2027</div>
@@ -7673,7 +7739,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7689,7 +7755,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/05/2027</div>
@@ -7721,7 +7787,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7737,7 +7803,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/05/2027</div>
@@ -7769,7 +7835,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7785,7 +7851,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/05/2027</div>
@@ -7817,7 +7883,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.352.998,05</td>
                         </tr>
                         
@@ -7833,7 +7899,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/06/2027</div>
@@ -7865,7 +7931,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7881,7 +7947,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/06/2027</div>
@@ -7913,7 +7979,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -7929,7 +7995,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/07/2027</div>
@@ -7961,7 +8027,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -7977,7 +8043,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/07/2027</div>
@@ -8009,7 +8075,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8025,7 +8091,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/08/2027</div>
@@ -8057,7 +8123,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8073,7 +8139,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/08/2027</div>
@@ -8105,7 +8171,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8121,7 +8187,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/09/2027</div>
@@ -8153,7 +8219,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8169,7 +8235,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/09/2027</div>
@@ -8201,7 +8267,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8217,7 +8283,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/10/2027</div>
@@ -8249,7 +8315,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8265,7 +8331,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/10/2027</div>
@@ -8297,7 +8363,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8313,7 +8379,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/11/2027</div>
@@ -8345,7 +8411,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8361,7 +8427,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/11/2027</div>
@@ -8393,7 +8459,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8409,7 +8475,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">22/11/2027</div>
@@ -8441,7 +8507,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.310.465,32</td>
                         </tr>
                         
@@ -8457,7 +8523,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/12/2027</div>
@@ -8489,7 +8555,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8505,7 +8571,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/12/2027</div>
@@ -8537,7 +8603,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8553,7 +8619,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/01/2028</div>
@@ -8585,7 +8651,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8601,7 +8667,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">10/01/2028</div>
@@ -8633,7 +8699,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.677,76</td>
                         </tr>
                         
@@ -8649,7 +8715,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/02/2028</div>
@@ -8681,7 +8747,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8697,7 +8763,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/03/2028</div>
@@ -8729,7 +8795,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8745,7 +8811,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/04/2028</div>
@@ -8777,7 +8843,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8793,7 +8859,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/05/2028</div>
@@ -8825,7 +8891,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8841,7 +8907,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">22/05/2028</div>
@@ -8873,7 +8939,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.260.292,02</td>
                         </tr>
                         
@@ -8889,7 +8955,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/06/2028</div>
@@ -8921,7 +8987,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8937,7 +9003,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/07/2028</div>
@@ -8969,7 +9035,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -8985,7 +9051,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/08/2028</div>
@@ -9017,7 +9083,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -9033,7 +9099,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/09/2028</div>
@@ -9065,7 +9131,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -9081,7 +9147,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">08/10/2028</div>
@@ -9113,7 +9179,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 8ch;">2.294,60</td>
                         </tr>
                         
@@ -9129,7 +9195,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">22/11/2028</div>
@@ -9161,7 +9227,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.215.467,16</td>
                         </tr>
                         
@@ -9177,7 +9243,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-bom">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/05/2029</div>
@@ -9209,7 +9275,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.167.076,65</td>
                         </tr>
                         
@@ -9225,7 +9291,7 @@
         </div>
     </div>
     
-    <div class="day-section">
+    <div class="day-section saldo-atencao">
         <!-- Header do dia -->
         <div class="day-header">
             <div class="day-date">21/11/2029</div>
@@ -9257,7 +9323,7 @@
                         
                         <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="currency">R$</td>
+                            <td class="currency">- R$</td>
                             <td class="value" style="width: 12ch;">1.121.487,71</td>
                         </tr>
                         

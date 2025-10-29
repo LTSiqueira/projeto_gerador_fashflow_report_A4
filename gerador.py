@@ -437,11 +437,12 @@ class FluxoCaixaProcessor:
         # Inicializar gerador de PDF
         pdf_generator = CashFlowPDFGenerator(template_dir='templates')
 
-        # Gerar PDFdeideix
+        # Gerar PDF
         pdf_path = pdf_generator.generate_pdf_report(
             df_relatorio_diario=self.df_relatorio_diario,
             df_timeline=self.df_timeline,
-            output_path=output_path
+            output_path=output_path,
+            arquivo_excel=self.file_path
         )
 
         return pdf_path

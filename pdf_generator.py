@@ -7,6 +7,38 @@ Data: 28/10/2025
 """
 
 import os
+import sys
+import warnings
+
+# Configurar ambiente para WeasyPrint no Windows (ANTES de importar weasyprint)
+# Resolve o erro "Fontconfig error: Cannot load default config file"
+if sys.platform == 'win32':
+    # Suprimir warnings de Fontconfig que não afetam a funcionalidade
+    warnings.filterwarnings('ignore', category=UserWarning, module='weasyprint')
+
+    # Configurar variáveis de ambiente para Fontconfig
+    # Criar um diretório temporário para cache do Fontconfig
+    fontconfig_cache = os.path.join(os.path.dirname(__file__), '.fontconfig_cache')
+    os.makedirs(fontconfig_cache, exist_ok=True)
+
+    # Configurar variáveis de ambiente
+    os.environ.setdefault('FONTCONFIG_PATH', fontconfig_cache)
+    os.environ.setdefault('FONTCONFIG_FILE', os.path.join(fontconfig_cache, 'fonts.conf'))
+
+    # Criar um arquivo fonts.conf básico se não existir
+    fonts_conf_path = os.path.join(fontconfig_cache, 'fonts.conf')
+    if not os.path.exists(fonts_conf_path):
+        fonts_conf_content = '''<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <dir>C:/Windows/Fonts</dir>
+  <cachedir>FONTCONFIG_CACHE</cachedir>
+</fontconfig>
+'''.replace('FONTCONFIG_CACHE', fontconfig_cache.replace('\\', '/'))
+
+        with open(fonts_conf_path, 'w', encoding='utf-8') as f:
+            f.write(fonts_conf_content)
+
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML, CSS
@@ -67,10 +99,86 @@ class CashFlowPDFGenerator:
             return ""
         return date.strftime('%d/%m/%Y')
 
+    @staticmethod
+    def _get_saldo_status(saldo: float) -> str:
+        """
+        Determina o status do saldo baseado em faixas de valor
+
+        Args:
+            saldo: Valor do saldo final do dia
+
+        Returns:
+            String com a classe CSS correspondente ao status do saldo
+        """
+        if saldo >= 15_000_000:
+            return 'saldo-excelente'  # Verde #91D9A6
+        elif saldo >= 10_000_000:
+            return 'saldo-bom'  # Amarelo claro #FFE295
+        elif saldo > 5_000_000:
+            return 'saldo-atencao'  # Laranja claro #FBBD89
+        elif saldo > 0:
+            return 'saldo-critico'  # Vermelho claro #F68C90
+        else:
+            return 'saldo-negativo'  # Vermelho forte #E73338
+
+    @staticmethod
+    def _gerar_alerta_pior_cenario(dias_data: list) -> dict:
+        """
+        Analisa todos os dias e retorna alerta baseado no pior cenário encontrado
+
+        Args:
+            dias_data: Lista com informações de todos os dias do relatório
+
+        Returns:
+            Dicionário com status e mensagem do alerta ou None se não houver alerta
+        """
+        if not dias_data:
+            return None
+
+        # Mapear prioridade dos status (quanto maior o número, pior o cenário)
+        prioridade_status = {
+            'saldo-excelente': 0,
+            'saldo-bom': 1,
+            'saldo-atencao': 2,
+            'saldo-critico': 3,
+            'saldo-negativo': 4
+        }
+
+        # Mensagens para cada status
+        mensagens = {
+            'saldo-excelente': 'Todos os saldos acima de R$ 15 Milhões',
+            'saldo-bom': 'Há data(s) abaixo de R$ 15 Milhões!',
+            'saldo-atencao': 'Há data(s) abaixo de R$ 10 Milhões!',
+            'saldo-critico': 'Há data(s) abaixo de R$ 5 Milhões!',
+            'saldo-negativo': 'Há data(s) com saldo negativo!'
+        }
+
+        # Encontrar o pior status entre todos os dias
+        pior_status = 'saldo-excelente'
+        pior_prioridade = 0
+
+        for dia in dias_data:
+            status_atual = dia['saldo_status']
+            prioridade_atual = prioridade_status.get(status_atual, 0)
+
+            if prioridade_atual > pior_prioridade:
+                pior_prioridade = prioridade_atual
+                pior_status = status_atual
+
+        # Retornar alerta apenas se não for o melhor cenário
+        if pior_status != 'saldo-excelente':
+            return {
+                'status': pior_status,
+                'mensagem': mensagens[pior_status]
+            }
+
+        return None
+
     def prepare_report_data(
         self,
         df_relatorio_diario: pd.DataFrame,
-        df_timeline: pd.DataFrame
+        df_timeline: pd.DataFrame,
+        arquivo_excel: str = None
     ) -> Dict:
         """
         Prepara dados do relatório em formato otimizado para o template
@@ -78,6 +186,7 @@ class CashFlowPDFGenerator:
         Args:
             df_relatorio_diario: DataFrame com resumo diário
             df_timeline: DataFrame com todas as transações detalhadas
+            arquivo_excel: Caminho do arquivo Excel fonte (opcional)
 
         Returns:
             Dicionário com dados estruturados para o template
@@ -108,7 +217,8 @@ class CashFlowPDFGenerator:
             for _, t in entradas.iterrows():
                 descricao = str(t['DESCRICAO'])
                 if pd.notna(t['PED']) and str(t['PED']).strip():
-                    descricao = f"{descricao} | {t['PED']}"
+                    # Adicionar prefixo "PV " para entradas (Pedido de Venda)
+                    descricao = f"{descricao} | PV {t['PED']}"
 
                 entradas_list.append({
                     'descricao': descricao,
@@ -120,7 +230,9 @@ class CashFlowPDFGenerator:
             for _, t in saidas.iterrows():
                 descricao = str(t['DESCRICAO'])
                 if pd.notna(t['PED']) and str(t['PED']).strip():
-                    descricao = f"{descricao} | {t['PED']}"
+                    # Adicionar prefixo "PC " para saídas (Pedido de Compra)
+                    # Saídas gerais não têm PED, então não entram aqui
+                    descricao = f"{descricao} | PC {t['PED']}"
 
                 saidas_list.append({
                     'descricao': descricao,
@@ -148,10 +260,12 @@ class CashFlowPDFGenerator:
                 max_width_saidas = max(max_width_saidas, len(total_fmt))
 
             # Dados do dia
+            saldo_final_valor = float(row['SALDO_FINAL'])
             dia_info = {
                 'data': data_formatada,
                 'dia_semana': data.strftime('%A'),
-                'saldo_final': float(row['SALDO_FINAL']),
+                'saldo_final': saldo_final_valor,
+                'saldo_status': self._get_saldo_status(saldo_final_valor),
                 'entradas': entradas_list,
                 'saidas': saidas_list,
                 'total_entradas': float(row['ENTRADAS']),
@@ -166,16 +280,30 @@ class CashFlowPDFGenerator:
         # Obter saldo base inicial (primeira linha do relatório diário)
         saldo_base = float(df_relatorio_diario.iloc[0]['SALDO_BANCARIO'])
 
+        # Detectar o pior cenário de saldo no relatório
+        alerta = self._gerar_alerta_pior_cenario(dias_data)
+
+        # Obter data de atualização (modificação do arquivo Excel, se fornecido)
+        if arquivo_excel and os.path.exists(arquivo_excel):
+            # Pegar timestamp de modificação do arquivo
+            timestamp_modificacao = os.path.getmtime(arquivo_excel)
+            data_atualizacao = datetime.fromtimestamp(timestamp_modificacao)
+            data_formatada = data_atualizacao.strftime('%d/%m/%Y %H:%Mh')
+        else:
+            # Fallback para data atual
+            data_formatada = datetime.now().strftime('%d/%m/%Y %H:%Mh')
+
         # Dados gerais do relatório
         report_data = {
             'titulo': 'Report Cashflow detalhado (A4)',
             'subtitulo': 'analise dia a dia',
             'saldo_base': saldo_base,
-            'data_geracao': datetime.now().strftime('%d/%m/%Y %H:%M'),
+            'data_geracao': data_formatada,
             'periodo_inicio': df_com_movimentacao['DATA'].min().strftime('%d/%m/%Y'),
             'periodo_fim': df_com_movimentacao['DATA'].max().strftime('%d/%m/%Y'),
             'total_dias': len(dias_data),
-            'dias': dias_data
+            'dias': dias_data,
+            'alerta': alerta
         }
 
         print(f"   ✅ {len(dias_data)} dias com movimentação preparados")
@@ -258,7 +386,8 @@ class CashFlowPDFGenerator:
         df_relatorio_diario: pd.DataFrame,
         df_timeline: pd.DataFrame,
         output_path: str,
-        template_name: str = 'cashflow_report.html'
+        template_name: str = 'cashflow_report.html',
+        arquivo_excel: str = None
     ) -> str:
         """
         Método principal: Gera relatório PDF completo
@@ -268,6 +397,7 @@ class CashFlowPDFGenerator:
             df_timeline: DataFrame com transações detalhadas
             output_path: Caminho do arquivo PDF de saída
             template_name: Nome do template a usar
+            arquivo_excel: Caminho do arquivo Excel fonte (opcional)
 
         Returns:
             Caminho do arquivo PDF gerado
@@ -277,7 +407,7 @@ class CashFlowPDFGenerator:
         print("="*100)
 
         # 1. Preparar dados
-        report_data = self.prepare_report_data(df_relatorio_diario, df_timeline)
+        report_data = self.prepare_report_data(df_relatorio_diario, df_timeline, arquivo_excel)
 
         # 2. Gerar HTML
         html_content = self.generate_html(report_data, template_name)
