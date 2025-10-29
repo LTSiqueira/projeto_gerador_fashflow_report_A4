@@ -396,12 +396,12 @@
         }
 
         .transaction-table .sign {
-            flex: 0 0 6px;
+            flex: 0 0 2px;
             text-align: right;
         }
 
         .transaction-table .currency {
-            flex: 0 0 18px;
+            flex: 0 0 12px;
             text-align: left;
         }
 
@@ -411,7 +411,7 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* Linha de total dentro da tabela */
+        /* Linha de total - herda TUDO das transações normais, só adiciona separador visual */
         .transaction-table tr.total-row {
             border-top: 0.5px solid #e0e0e0;
         }
@@ -420,16 +420,12 @@
             padding-top: 8px;
         }
 
-        .transaction-table tr.total-row .sign,
-        .transaction-table tr.total-row .currency,
-        .transaction-table tr.total-row .value {
+        /* Apenas negrito e cor - layout/alinhamento são 100% herdados */
+        .transaction-table tr.total-row span {
             font-weight: 600;
-            color: #333;
         }
 
-        .transaction-table tr.total-row.total-row-negative .sign,
-        .transaction-table tr.total-row.total-row-negative .currency,
-        .transaction-table tr.total-row.total-row-negative .value {
+        .transaction-table tr.total-row.total-row-negative span {
             color: #d32f2f;
         }
 
@@ -487,7 +483,22 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+        /* Alinhamento fino dos totalizadores (Entradas e Saídas)
+        Empurra o "-" e o "R$" do TOTAL levemente pra direita,
+        juntos, sem quebrar o flex nem a largura da coluna.
+        */
+        .transaction-table tr.total-row .sign,
+        .transaction-table tr.total-row .currency {
+            position: relative;
+            left: 5.6px; /* se ainda ficar 1px curto, usa 2px */
         }
+
+        /* Descrição mais “compacta” quando quebra em 2+ linhas */
+        .transaction-table td.desc {
+            line-height: 1.25; /* pode testar 1.28 / 1.3 se quiser bem sutil */
+        }
+
+
     </style>
 </head>
 <body>
@@ -507,13 +518,13 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
                         </svg>
-                        <span>Período: 28/10/2025 a 21/11/2029</span>
+                        <span>Período: 29/10/2025 a 21/11/2029</span>
                     </div>
                     <div class="report-info-item">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
                         </svg>
-                        <span>Atualizado em: 28/10/2025 11:10h</span>
+                        <span>Atualizado em: 28/10/2025 17:27h</span>
                     </div>
                     
                     <div class="report-info-item alerta-item alerta-saldo-atencao">
@@ -561,7 +572,7 @@
                         
                         <span class="sign"></span>
                         <span class="currency">R$</span>
-                        <span class="value">18.495.021,35</span>
+                        <span class="value">18.695.175,63</span>
                     </div>
                 </div>
             </div>
@@ -573,98 +584,12 @@
     <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
-            <div class="day-date">28/10/2025</div>
-            <div class="day-total">
-                
-                <span class="sign"></span>
-                <span class="currency">R$</span>
-                <span class="value">18.673.459,65</span>
-            </div>
-        </div>
-
-        <!-- Transações do dia (duas colunas) -->
-        <div class="transactions">
-            <!-- COLUNA: ENTRADAS -->
-            <div class="transaction-column">
-                <h3>Entradas</h3>
-
-                
-                    <table class="transaction-table">
-                        
-                        
-                        <tr>
-                            <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4706</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">652.500,00</span>
-                            </td>
-                        </tr>
-                        
-                        <tr class="total-row">
-                            <td class="desc"></td>
-                            
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">652.500,00</span>
-                            </td>
-                        </tr>
-                    </table>
-                
-            </div>
-
-            <!-- COLUNA: SAÍDAS -->
-            <div class="transaction-column">
-                <h3>Saídas</h3>
-
-                
-                    <table class="transaction-table">
-                        
-                        
-                        <tr>
-                            <td class="desc">SAÍDAS GERAIS</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">171.751,70</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">OCP FERTILIZANTES LTDA | PC 814</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">302.310,00</span>
-                            </td>
-                        </tr>
-                        
-                        <tr class="total-row total-row-negative">
-                            <td class="desc"></td>
-                            
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">474.061,70</span>
-                            </td>
-                        </tr>
-                    </table>
-                
-            </div>
-        </div>
-    </div>
-    
-    <div class="day-section saldo-excelente">
-        <!-- Header do dia -->
-        <div class="day-header">
             <div class="day-date">29/10/2025</div>
             <div class="day-total">
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.741.285,54</span>
+                <span class="value">17.761.076,40</span>
             </div>
         </div>
 
@@ -692,17 +617,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">858.416,43</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 801</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">35.430,60</span>
+                                <span class="value" style="width: 10ch;">860.341,55</span>
                             </td>
                         </tr>
                         
@@ -716,13 +631,23 @@
                             </td>
                         </tr>
                         
+                        
+                        <tr>
+                            <td class="desc">INTERFERTIL FERTILIZANTES LTDA | PC 801</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 10ch;">35.430,60</span>
+                            </td>
+                        </tr>
+                        
                         <tr class="total-row total-row-negative">
                             <td class="desc"></td>
                             
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">932.174,11</span>
+                                <span class="value" style="width: 10ch;">934.099,23</span>
                             </td>
                         </tr>
                     </table>
@@ -739,7 +664,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">38.731.694,63</span>
+                <span class="value">39.385.691,49</span>
             </div>
         </div>
 
@@ -754,21 +679,11 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4581</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4588</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">160.848,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">SIVIERO E CIA LTDA | PV 4590</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">64.600,00</span>
+                                <span class="value" style="width: 13ch;">227.700,00</span>
                             </td>
                         </tr>
                         
@@ -779,6 +694,16 @@
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 13ch;">24.360,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">SIVIERO E CIA LTDA | PV 4590</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">64.600,00</span>
                             </td>
                         </tr>
                         
@@ -824,11 +749,21 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 3950</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4581</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">4.860.000,00</span>
+                                <span class="value" style="width: 13ch;">160.848,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4341</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">310.059,75</span>
                             </td>
                         </tr>
                         
@@ -844,31 +779,21 @@
                         
                         
                         <tr>
-                            <td class="desc">CARLOS ERNESTO AUGUSTIN | PV 4680</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4631</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">709.777,20</span>
+                                <span class="value" style="width: 13ch;">382.500,00</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | PV 4479</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4322</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">134.912,25</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4583</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">374.440,00</span>
+                                <span class="value" style="width: 13ch;">1.446.945,50</span>
                             </td>
                         </tr>
                         
@@ -884,71 +809,11 @@
                         
                         
                         <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | PV 4341</td>
+                            <td class="desc">ADAIR VENDRUSCOLO | PV 4479</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">310.371,60</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO | PV 4322</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.448.400,80</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4478</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">404.736,75</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4476</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">809.473,50</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4321</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.241.486,40</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4320</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">413.828,80</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4311</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">295.860,72</span>
+                                <span class="value" style="width: 13ch;">134.912,25</span>
                             </td>
                         </tr>
                         
@@ -964,6 +829,76 @@
                         
                         
                         <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4320</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">413.413,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4321</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">1.240.239,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4311</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">295.563,45</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4476</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">809.473,50</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ADAIR VENDRUSCOLO E OUTROS | PV 4478</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">404.736,75</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">CARLOS ERNESTO AUGUSTIN | PV 4680</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">709.777,20</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">CELIA STORCH KLEIN E OUTROS | PV 4625</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">97.984,25</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
                             <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4638</td>
                             <td class="monetary">
                                 <span class="sign"></span>
@@ -974,31 +909,11 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4588</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">227.700,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">CELIA STORCH KLEIN E OUTROS | PV 4625</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">98.082,80</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">COOPERATIVA AGROINDUSTRIAL DOS PRODUTORES RURAIS DO SUDOESTE GOIANO | PV 4537</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">4.353.264,00</span>
+                                <span class="value" style="width: 13ch;">4.348.890,00</span>
                             </td>
                         </tr>
                         
@@ -1014,11 +929,21 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4631</td>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 3950</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">382.500,00</span>
+                                <span class="value" style="width: 13ch;">4.860.000,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4583</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">374.440,00</span>
                             </td>
                         </tr>
                         
@@ -1028,7 +953,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">23.387.074,22</span>
+                                <span class="value" style="width: 13ch;">23.378.874,05</span>
                             </td>
                         </tr>
                     </table>
@@ -1044,6 +969,16 @@
                         
                         
                         <tr>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 779</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">208.606,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
                             <td class="desc">OUROFERTIL NORDESTE LTDA | PC 780</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
@@ -1054,11 +989,11 @@
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 779</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 781</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">208.606,00</span>
+                                <span class="value" style="width: 12ch;">207.792,00</span>
                             </td>
                         </tr>
                         
@@ -1078,7 +1013,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">68.523,60</span>
+                                <span class="value" style="width: 12ch;">68.454,75</span>
                             </td>
                         </tr>
                         
@@ -1094,21 +1029,11 @@
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 781</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">207.792,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.501.822,53</span>
+                                <span class="value" style="width: 12ch;">859.485,21</span>
                             </td>
                         </tr>
                         
@@ -1118,7 +1043,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">2.396.665,13</span>
+                                <span class="value" style="width: 12ch;">1.754.258,96</span>
                             </td>
                         </tr>
                     </table>
@@ -1135,7 +1060,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">38.163.342,35</span>
+                <span class="value">38.440.042,89</span>
             </div>
         </div>
 
@@ -1163,7 +1088,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">568.352,28</span>
+                                <span class="value" style="width: 10ch;">945.648,60</span>
                             </td>
                         </tr>
                         
@@ -1173,7 +1098,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">568.352,28</span>
+                                <span class="value" style="width: 10ch;">945.648,60</span>
                             </td>
                         </tr>
                     </table>
@@ -1190,7 +1115,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">36.977.651,43</span>
+                <span class="value">37.254.351,97</span>
             </div>
         </div>
 
@@ -1245,7 +1170,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">36.721.563,52</span>
+                <span class="value">36.998.521,38</span>
             </div>
         </div>
 
@@ -1273,7 +1198,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">256.087,90</span>
+                                <span class="value" style="width: 10ch;">255.830,60</span>
                             </td>
                         </tr>
                         
@@ -1283,7 +1208,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">256.087,90</span>
+                                <span class="value" style="width: 10ch;">255.830,60</span>
                             </td>
                         </tr>
                     </table>
@@ -1300,7 +1225,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">31.128.244,68</span>
+                <span class="value">31.140.359,85</span>
             </div>
         </div>
 
@@ -1324,21 +1249,21 @@
                         
                         
                         <tr>
-                            <td class="desc">SAÍDAS GERAIS</td>
+                            <td class="desc">ALLIED HARVEST (ASIA) COMPANY LIMITED | PC 788</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">890.718,84</span>
+                                <span class="value" style="width: 12ch;">4.697.875,00</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">ALLIED HARVEST (ASIA) COMPANY LIMITED | PC 788</td>
+                            <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">4.702.600,00</span>
+                                <span class="value" style="width: 12ch;">1.160.286,53</span>
                             </td>
                         </tr>
                         
@@ -1348,7 +1273,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">5.593.318,84</span>
+                                <span class="value" style="width: 12ch;">5.858.161,53</span>
                             </td>
                         </tr>
                     </table>
@@ -1365,7 +1290,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">30.990.344,88</span>
+                <span class="value">31.002.460,05</span>
             </div>
         </div>
 
@@ -1420,7 +1345,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">30.324.410,45</span>
+                <span class="value">30.045.037,10</span>
             </div>
         </div>
 
@@ -1435,21 +1360,21 @@
                         
                         
                         <tr>
-                            <td class="desc">ANDRE TRIPOLONI | PV 4696</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.332.851,20</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">TRIM FLORESTAL S.A. | PV 4690</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 12ch;">815.680,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ANDRE TRIPOLONI | PV 4696</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">1.331.512,00</span>
                             </td>
                         </tr>
                         
@@ -1459,7 +1384,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">2.148.531,20</span>
+                                <span class="value" style="width: 12ch;">2.147.192,00</span>
                             </td>
                         </tr>
                     </table>
@@ -1485,21 +1410,21 @@
                         
                         
                         <tr>
-                            <td class="desc">ELEVA QUIMICA LTDA | PC 812</td>
+                            <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.300.604,80</span>
+                                <span class="value" style="width: 12ch;">1.167.140,95</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SAÍDAS GERAIS</td>
+                            <td class="desc">ELEVA QUIMICA LTDA | PC 812</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">875.684,84</span>
+                                <span class="value" style="width: 12ch;">1.299.298,00</span>
                             </td>
                         </tr>
                         
@@ -1509,7 +1434,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">2.814.465,64</span>
+                                <span class="value" style="width: 12ch;">3.104.614,95</span>
                             </td>
                         </tr>
                     </table>
@@ -1526,7 +1451,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">30.101.235,45</span>
+                <span class="value">29.821.862,10</span>
             </div>
         </div>
 
@@ -1581,7 +1506,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">29.996.531,75</span>
+                <span class="value">29.711.182,26</span>
             </div>
         </div>
 
@@ -1640,7 +1565,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">151.833,70</span>
+                                <span class="value" style="width: 10ch;">157.809,84</span>
                             </td>
                         </tr>
                         
@@ -1650,7 +1575,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">151.833,70</span>
+                                <span class="value" style="width: 10ch;">157.809,84</span>
                             </td>
                         </tr>
                     </table>
@@ -1667,7 +1592,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">27.858.697,59</span>
+                <span class="value">27.575.491,21</span>
             </div>
         </div>
 
@@ -1691,21 +1616,21 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | PC 806</td>
+                            <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.956.281,60</span>
+                                <span class="value" style="width: 12ch;">181.375,05</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">SAÍDAS GERAIS</td>
+                            <td class="desc">ENBEL S.A. | PC 806</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">181.552,56</span>
+                                <span class="value" style="width: 12ch;">1.954.316,00</span>
                             </td>
                         </tr>
                         
@@ -1715,7 +1640,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">2.137.834,16</span>
+                                <span class="value" style="width: 12ch;">2.135.691,05</span>
                             </td>
                         </tr>
                     </table>
@@ -1732,7 +1657,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">27.168.007,14</span>
+                <span class="value">27.197.726,88</span>
             </div>
         </div>
 
@@ -1760,7 +1685,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">690.690,45</span>
+                                <span class="value" style="width: 10ch;">377.764,33</span>
                             </td>
                         </tr>
                         
@@ -1770,7 +1695,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">690.690,45</span>
+                                <span class="value" style="width: 10ch;">377.764,33</span>
                             </td>
                         </tr>
                     </table>
@@ -1787,7 +1712,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">27.051.238,79</span>
+                <span class="value">27.076.429,83</span>
             </div>
         </div>
 
@@ -1815,7 +1740,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">116.768,35</span>
+                                <span class="value" style="width: 10ch;">121.297,05</span>
                             </td>
                         </tr>
                         
@@ -1825,7 +1750,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">116.768,35</span>
+                                <span class="value" style="width: 10ch;">121.297,05</span>
                             </td>
                         </tr>
                     </table>
@@ -1842,7 +1767,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">27.050.627,91</span>
+                <span class="value">27.075.818,95</span>
             </div>
         </div>
 
@@ -1897,7 +1822,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">27.164.219,57</span>
+                <span class="value">27.189.296,19</span>
             </div>
         </div>
 
@@ -1916,7 +1841,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">154.266,78</span>
+                                <span class="value" style="width: 10ch;">154.111,78</span>
                             </td>
                         </tr>
                         
@@ -1926,7 +1851,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">164.069,68</span>
+                                <span class="value" style="width: 10ch;">163.904,83</span>
                             </td>
                         </tr>
                         
@@ -1936,7 +1861,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">318.336,46</span>
+                                <span class="value" style="width: 10ch;">318.016,61</span>
                             </td>
                         </tr>
                     </table>
@@ -1952,21 +1877,21 @@
                         
                         
                         <tr>
-                            <td class="desc">SAÍDAS GERAIS</td>
+                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 807</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">73.179,50</span>
+                                <span class="value" style="width: 10ch;">131.433,12</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">OUROFERTIL NORDESTE LTDA | PC 807</td>
+                            <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">131.565,31</span>
+                                <span class="value" style="width: 10ch;">73.106,25</span>
                             </td>
                         </tr>
                         
@@ -1976,7 +1901,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">204.744,81</span>
+                                <span class="value" style="width: 10ch;">204.539,37</span>
                             </td>
                         </tr>
                     </table>
@@ -1993,7 +1918,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">31.283.799,57</span>
+                <span class="value">31.308.876,19</span>
             </div>
         </div>
 
@@ -2008,41 +1933,21 @@
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4520</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">2.040.594,14</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4514</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">292.665,29</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3927</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.658.487,50</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4533</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 12ch;">500.065,60</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3852</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">51.143,82</span>
                             </td>
                         </tr>
                         
@@ -2058,11 +1963,11 @@
                         
                         
                         <tr>
-                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3928</td>
+                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3854</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">416.137,50</span>
+                                <span class="value" style="width: 12ch;">91.163,52</span>
                             </td>
                         </tr>
                         
@@ -2078,21 +1983,41 @@
                         
                         
                         <tr>
-                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3854</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3928</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">91.163,52</span>
+                                <span class="value" style="width: 12ch;">416.137,50</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">JARDEL ADONIS NIEDERMEIER E OUTRO | PV 3852</td>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4520</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">51.143,82</span>
+                                <span class="value" style="width: 12ch;">2.040.594,14</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 3927</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">1.658.487,50</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">NUTRIVERDE IND. COM. IMP. E EXP. LTDA | PV 4514</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">292.665,29</span>
                             </td>
                         </tr>
                         
@@ -2149,7 +2074,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">31.156.817,18</span>
+                <span class="value">31.181.776,53</span>
             </div>
         </div>
 
@@ -2177,7 +2102,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">126.982,39</span>
+                                <span class="value" style="width: 10ch;">127.099,66</span>
                             </td>
                         </tr>
                         
@@ -2187,7 +2112,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">126.982,39</span>
+                                <span class="value" style="width: 10ch;">127.099,66</span>
                             </td>
                         </tr>
                     </table>
@@ -2204,7 +2129,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">31.197.282,47</span>
+                <span class="value">31.219.496,82</span>
             </div>
         </div>
 
@@ -2253,7 +2178,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 8ch;">1.098,04</span>
+                                <span class="value" style="width: 8ch;">3.843,04</span>
                             </td>
                         </tr>
                         
@@ -2263,7 +2188,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 8ch;">1.098,04</span>
+                                <span class="value" style="width: 8ch;">3.843,04</span>
                             </td>
                         </tr>
                     </table>
@@ -2280,7 +2205,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">31.095.579,00</span>
+                <span class="value">31.117.931,13</span>
             </div>
         </div>
 
@@ -2329,7 +2254,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">229.703,47</span>
+                                <span class="value" style="width: 10ch;">229.565,69</span>
                             </td>
                         </tr>
                         
@@ -2339,7 +2264,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">229.703,47</span>
+                                <span class="value" style="width: 10ch;">229.565,69</span>
                             </td>
                         </tr>
                     </table>
@@ -2356,7 +2281,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">29.728.776,17</span>
+                <span class="value">29.752.632,08</span>
             </div>
         </div>
 
@@ -2371,21 +2296,21 @@
                         
                         
                         <tr>
-                            <td class="desc">DONATO BIANCHI GODOY | PV 4692</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">43.750,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">MARIA DE LOURDES BITTENCOURT PEDROSA BARBOSA COELHO | PV 4691</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 10ch;">87.500,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">DONATO BIANCHI GODOY | PV 4692</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 10ch;">43.750,00</span>
                             </td>
                         </tr>
                         
@@ -2415,7 +2340,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.498.052,82</span>
+                                <span class="value" style="width: 12ch;">1.496.549,05</span>
                             </td>
                         </tr>
                         
@@ -2425,7 +2350,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.498.052,82</span>
+                                <span class="value" style="width: 12ch;">1.496.549,05</span>
                             </td>
                         </tr>
                     </table>
@@ -2437,12 +2362,12 @@
     <div class="day-section saldo-excelente">
         <!-- Header do dia -->
         <div class="day-header">
-            <div class="day-date">23/11/2025</div>
+            <div class="day-date">22/11/2025</div>
             <div class="day-total">
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">24.101.779,37</span>
+                <span class="value">29.637.132,08</span>
             </div>
         </div>
 
@@ -2466,21 +2391,11 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | PC 803</td>
+                            <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">937.832,80</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">ENBEL S.A. | PC 776</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">4.689.164,00</span>
+                                <span class="value" style="width: 10ch;">115.500,00</span>
                             </td>
                         </tr>
                         
@@ -2490,7 +2405,72 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">5.626.996,80</span>
+                                <span class="value" style="width: 10ch;">115.500,00</span>
+                            </td>
+                        </tr>
+                    </table>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="day-section saldo-excelente">
+        <!-- Header do dia -->
+        <div class="day-header">
+            <div class="day-date">23/11/2025</div>
+            <div class="day-total">
+                
+                <span class="sign"></span>
+                <span class="currency">R$</span>
+                <span class="value">24.015.789,08</span>
+            </div>
+        </div>
+
+        <!-- Transações do dia (duas colunas) -->
+        <div class="transactions">
+            <!-- COLUNA: ENTRADAS -->
+            <div class="transaction-column">
+                <h3>Entradas</h3>
+
+                
+                    <div class="no-transactions">Nenhuma entrada registrada neste dia</div>
+                
+            </div>
+
+            <!-- COLUNA: SAÍDAS -->
+            <div class="transaction-column">
+                <h3>Saídas</h3>
+
+                
+                    <table class="transaction-table">
+                        
+                        
+                        <tr>
+                            <td class="desc">ENBEL S.A. | PC 776</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">4.684.452,50</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ENBEL S.A. | PC 803</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">936.890,50</span>
+                            </td>
+                        </tr>
+                        
+                        <tr class="total-row total-row-negative">
+                            <td class="desc"></td>
+                            
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 12ch;">5.621.343,00</span>
                             </td>
                         </tr>
                     </table>
@@ -2507,7 +2487,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">23.658.549,57</span>
+                <span class="value">23.572.559,28</span>
             </div>
         </div>
 
@@ -2562,7 +2542,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">23.655.286,57</span>
+                <span class="value">23.569.296,28</span>
             </div>
         </div>
 
@@ -2617,7 +2597,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">23.650.826,57</span>
+                <span class="value">23.564.836,28</span>
             </div>
         </div>
 
@@ -2672,7 +2652,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">40.696.235,06</span>
+                <span class="value">40.598.904,01</span>
             </div>
         </div>
 
@@ -2687,21 +2667,11 @@
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4394</td>
+                            <td class="desc">CAAP-COOPERATIVA ALIANCA DOS PRODUTORES DO PARECIS | PV 4233</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">91.101,11</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4509</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">6.664.256,00</span>
+                                <span class="value" style="width: 13ch;">1.675.128,00</span>
                             </td>
                         </tr>
                         
@@ -2711,37 +2681,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">608.833,53</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | PV 4482</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">50.616,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">CAAP-COOPERATIVA ALIANCA DOS PRODUTORES DO PARECIS | PV 4233</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.676.812,80</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4393</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">231.893,73</span>
+                                <span class="value" style="width: 13ch;">608.221,80</span>
                             </td>
                         </tr>
                         
@@ -2751,47 +2691,27 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">305.781,86</span>
+                                <span class="value" style="width: 13ch;">305.474,62</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4392</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4509</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">165.638,38</span>
+                                <span class="value" style="width: 13ch;">6.657.560,00</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4390</td>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4394</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">99.383,02</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">VITORIO HERKLOTZ E OUTROS | PV 4384</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">928.266,37</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | PV 3956</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">837.480,65</span>
+                                <span class="value" style="width: 13ch;">91.101,11</span>
                             </td>
                         </tr>
                         
@@ -2807,26 +2727,6 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4632</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">90.892,06</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4585</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">6.397.685,76</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">MARLON FEDRIZZI | PV 4644</td>
                             <td class="monetary">
                                 <span class="sign"></span>
@@ -2837,11 +2737,61 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4586</td>
+                            <td class="desc">PAULO PRUDENTE POLIZEL E OUTROS | PV 3956</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">94.456,88</span>
+                                <span class="value" style="width: 13ch;">837.480,65</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">SANTA MARIA DO BURITI EMPREENDIMENTOS IMOBILIARIOS E AGROPECUARIA LTDA | PV 4482</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">50.616,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">VITORIO HERKLOTZ E OUTROS | PV 4384</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">927.333,68</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">MARLON FEDRIZZI | PV 4632</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">90.892,06</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">MARLON FEDRIZZI | PV 4642</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">89.037,12</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">MARLON FEDRIZZI | PV 4626</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">118.494,00</span>
                             </td>
                         </tr>
                         
@@ -2857,6 +2807,16 @@
                         
                         
                         <tr>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4393</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">231.893,73</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
                             <td class="desc">MARLON FEDRIZZI | PV 4686</td>
                             <td class="monetary">
                                 <span class="sign"></span>
@@ -2867,21 +2827,21 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4689</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4586</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">371.988,00</span>
+                                <span class="value" style="width: 13ch;">96.456,88</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4626</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4585</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">118.494,00</span>
+                                <span class="value" style="width: 13ch;">6.391.257,60</span>
                             </td>
                         </tr>
                         
@@ -2901,7 +2861,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.676.812,80</span>
+                                <span class="value" style="width: 13ch;">1.675.128,00</span>
                             </td>
                         </tr>
                         
@@ -2921,7 +2881,17 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">334.623,24</span>
+                                <span class="value" style="width: 13ch;">334.229,23</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4390</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">99.383,02</span>
                             </td>
                         </tr>
                         
@@ -2937,11 +2907,21 @@
                         
                         
                         <tr>
-                            <td class="desc">MARLON FEDRIZZI | PV 4642</td>
+                            <td class="desc">MARLON FEDRIZZI | PV 4689</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">89.037,12</span>
+                                <span class="value" style="width: 13ch;">371.988,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">GUSTAVO VIGANO PICCOLI | PV 4392</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">165.638,38</span>
                             </td>
                         </tr>
                         
@@ -2951,7 +2931,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">22.663.132,63</span>
+                                <span class="value" style="width: 13ch;">22.646.393,20</span>
                             </td>
                         </tr>
                     </table>
@@ -2971,7 +2951,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">377.684,14</span>
+                                <span class="value" style="width: 12ch;">377.550,47</span>
                             </td>
                         </tr>
                         
@@ -2981,7 +2961,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">5.240.040,00</span>
+                                <span class="value" style="width: 12ch;">5.234.775,00</span>
                             </td>
                         </tr>
                         
@@ -2991,7 +2971,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">5.617.724,14</span>
+                                <span class="value" style="width: 12ch;">5.612.325,47</span>
                             </td>
                         </tr>
                     </table>
@@ -3008,7 +2988,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.961.482,08</span>
+                <span class="value">51.860.175,50</span>
             </div>
         </div>
 
@@ -3027,7 +3007,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">292.313,62</span>
+                                <span class="value" style="width: 13ch;">292.019,91</span>
                             </td>
                         </tr>
                         
@@ -3037,7 +3017,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.827.296,00</span>
+                                <span class="value" style="width: 13ch;">1.825.460,00</span>
                             </td>
                         </tr>
                         
@@ -3057,7 +3037,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">1.370.472,00</span>
+                                <span class="value" style="width: 13ch;">1.369.095,00</span>
                             </td>
                         </tr>
                         
@@ -3067,7 +3047,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">255.069,02</span>
+                                <span class="value" style="width: 13ch;">254.812,74</span>
                             </td>
                         </tr>
                         
@@ -3077,7 +3057,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">211.536,38</span>
+                                <span class="value" style="width: 13ch;">211.323,84</span>
                             </td>
                         </tr>
                         
@@ -3097,7 +3077,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">12.709.396,02</span>
+                                <span class="value" style="width: 13ch;">12.705.420,49</span>
                             </td>
                         </tr>
                     </table>
@@ -3144,7 +3124,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.944.034,34</span>
+                <span class="value">51.842.727,76</span>
             </div>
         </div>
 
@@ -3199,7 +3179,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.933.304,34</span>
+                <span class="value">51.831.997,76</span>
             </div>
         </div>
 
@@ -3254,7 +3234,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.928.907,09</span>
+                <span class="value">51.827.600,51</span>
             </div>
         </div>
 
@@ -3309,7 +3289,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.908.223,73</span>
+                <span class="value">51.806.917,15</span>
             </div>
         </div>
 
@@ -3364,7 +3344,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">51.827.267,48</span>
+                <span class="value">51.726.042,24</span>
             </div>
         </div>
 
@@ -3392,7 +3372,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 9ch;">80.956,25</span>
+                                <span class="value" style="width: 9ch;">80.874,91</span>
                             </td>
                         </tr>
                         
@@ -3402,7 +3382,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 9ch;">80.956,25</span>
+                                <span class="value" style="width: 9ch;">80.874,91</span>
                             </td>
                         </tr>
                     </table>
@@ -3419,7 +3399,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">52.023.416,77</span>
+                <span class="value">51.922.191,53</span>
             </div>
         </div>
 
@@ -3454,6 +3434,16 @@
                         
                         
                         <tr>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4524</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 10ch;">9.168,25</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
                             <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4522</td>
                             <td class="monetary">
                                 <span class="sign"></span>
@@ -3469,16 +3459,6 @@
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 10ch;">59.116,14</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4524</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">9.168,25</span>
                             </td>
                         </tr>
                         
@@ -3545,7 +3525,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">52.092.685,96</span>
+                <span class="value">51.991.312,69</span>
             </div>
         </div>
 
@@ -3564,7 +3544,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">147.325,74</span>
+                                <span class="value" style="width: 10ch;">147.177,71</span>
                             </td>
                         </tr>
                         
@@ -3574,7 +3554,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">147.325,74</span>
+                                <span class="value" style="width: 10ch;">147.177,71</span>
                             </td>
                         </tr>
                     </table>
@@ -3621,7 +3601,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">52.074.545,96</span>
+                <span class="value">51.973.172,69</span>
             </div>
         </div>
 
@@ -3676,7 +3656,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">50.897.573,50</span>
+                <span class="value">50.797.382,20</span>
             </div>
         </div>
 
@@ -3704,7 +3684,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.176.972,45</span>
+                                <span class="value" style="width: 12ch;">1.175.790,49</span>
                             </td>
                         </tr>
                         
@@ -3714,7 +3694,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.176.972,45</span>
+                                <span class="value" style="width: 12ch;">1.175.790,49</span>
                             </td>
                         </tr>
                     </table>
@@ -3731,7 +3711,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.471.269,88</span>
+                <span class="value">17.403.613,58</span>
             </div>
         </div>
 
@@ -3746,21 +3726,21 @@
                         
                         
                         <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4549</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">263.124,02</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">MONTANA INDUSTRIA E COMERCIO DE SUPLEMENTOS MINERAIS E RACOES LTDA | PV 4548</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 10ch;">41.563,34</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4549</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 10ch;">263.124,02</span>
                             </td>
                         </tr>
                         
@@ -3786,16 +3766,6 @@
                         
                         
                         <tr>
-                            <td class="desc">ENBEL S.A. | PC 793</td>
-                            <td class="monetary">
-                                <span class="sign">-</span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">3.708.336,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">SAÍDAS GERAIS</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
@@ -3810,7 +3780,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">4.568.240,00</span>
+                                <span class="value" style="width: 13ch;">4.563.650,00</span>
                             </td>
                         </tr>
                         
@@ -3820,7 +3790,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">9.270.840,00</span>
+                                <span class="value" style="width: 13ch;">9.261.525,00</span>
                             </td>
                         </tr>
                         
@@ -3830,7 +3800,17 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">9.270.840,00</span>
+                                <span class="value" style="width: 13ch;">9.261.525,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">ENBEL S.A. | PC 793</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">3.704.610,00</span>
                             </td>
                         </tr>
                         
@@ -3840,7 +3820,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">5.562.504,00</span>
+                                <span class="value" style="width: 13ch;">5.556.915,00</span>
                             </td>
                         </tr>
                         
@@ -3850,7 +3830,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">33.730.990,98</span>
+                                <span class="value" style="width: 13ch;">33.698.455,98</span>
                             </td>
                         </tr>
                     </table>
@@ -3867,7 +3847,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.471.099,88</span>
+                <span class="value">17.403.443,58</span>
             </div>
         </div>
 
@@ -3922,7 +3902,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.732.369,09</span>
+                <span class="value">17.664.712,79</span>
             </div>
         </div>
 
@@ -3987,7 +3967,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.748.799,22</span>
+                <span class="value">17.681.316,21</span>
             </div>
         </div>
 
@@ -3999,6 +3979,16 @@
 
                 
                     <table class="transaction-table">
+                        
+                        
+                        <tr>
+                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4573</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 10ch;">36.960,00</span>
+                            </td>
+                        </tr>
                         
                         
                         <tr>
@@ -4017,16 +4007,6 @@
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 10ch;">44.740,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">LINEAGRO PRODUTOS AGROPECUARIOS SA | PV 4573</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">36.960,00</span>
                             </td>
                         </tr>
                         
@@ -4056,7 +4036,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">172.469,87</span>
+                                <span class="value" style="width: 10ch;">172.296,58</span>
                             </td>
                         </tr>
                         
@@ -4066,7 +4046,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">172.469,87</span>
+                                <span class="value" style="width: 10ch;">172.296,58</span>
                             </td>
                         </tr>
                     </table>
@@ -4083,7 +4063,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.658.047,32</span>
+                <span class="value">17.590.564,31</span>
             </div>
         </div>
 
@@ -4138,7 +4118,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.564.507,32</span>
+                <span class="value">17.497.024,31</span>
             </div>
         </div>
 
@@ -4193,7 +4173,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.577.857,42</span>
+                <span class="value">17.510.374,41</span>
             </div>
         </div>
 
@@ -4269,7 +4249,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.157.907,77</span>
+                <span class="value">17.090.829,76</span>
             </div>
         </div>
 
@@ -4297,7 +4277,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">419.949,65</span>
+                                <span class="value" style="width: 10ch;">419.544,65</span>
                             </td>
                         </tr>
                         
@@ -4307,7 +4287,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">419.949,65</span>
+                                <span class="value" style="width: 10ch;">419.544,65</span>
                             </td>
                         </tr>
                     </table>
@@ -4324,7 +4304,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.156.944,77</span>
+                <span class="value">17.089.866,76</span>
             </div>
         </div>
 
@@ -4379,7 +4359,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.141.946,61</span>
+                <span class="value">17.074.868,60</span>
             </div>
         </div>
 
@@ -4434,7 +4414,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.118.946,61</span>
+                <span class="value">17.051.868,60</span>
             </div>
         </div>
 
@@ -4489,7 +4469,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.815.782,59</span>
+                <span class="value">16.748.704,58</span>
             </div>
         </div>
 
@@ -4595,7 +4575,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.805.052,59</span>
+                <span class="value">16.737.974,58</span>
             </div>
         </div>
 
@@ -4650,7 +4630,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.401.972,59</span>
+                <span class="value">16.335.299,58</span>
             </div>
         </div>
 
@@ -4678,7 +4658,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">403.080,00</span>
+                                <span class="value" style="width: 10ch;">402.675,00</span>
                             </td>
                         </tr>
                         
@@ -4688,7 +4668,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">403.080,00</span>
+                                <span class="value" style="width: 10ch;">402.675,00</span>
                             </td>
                         </tr>
                     </table>
@@ -4705,7 +4685,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.401.061,09</span>
+                <span class="value">16.334.388,08</span>
             </div>
         </div>
 
@@ -4760,7 +4740,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.997.981,09</span>
+                <span class="value">15.931.713,08</span>
             </div>
         </div>
 
@@ -4788,7 +4768,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">403.080,00</span>
+                                <span class="value" style="width: 10ch;">402.675,00</span>
                             </td>
                         </tr>
                         
@@ -4798,7 +4778,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">403.080,00</span>
+                                <span class="value" style="width: 10ch;">402.675,00</span>
                             </td>
                         </tr>
                     </table>
@@ -4815,7 +4795,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.995.127,49</span>
+                <span class="value">15.928.859,48</span>
             </div>
         </div>
 
@@ -4870,7 +4850,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">30.255.347,49</span>
+                <span class="value">30.189.079,48</span>
             </div>
         </div>
 
@@ -4882,6 +4862,36 @@
 
                 
                     <table class="transaction-table">
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4352</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">20.280,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4356</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">101.400,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4355</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">304.200,00</span>
+                            </td>
+                        </tr>
                         
                         
                         <tr>
@@ -4905,121 +4915,11 @@
                         
                         
                         <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4355</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">304.200,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
                             <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4351</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 13ch;">187.590,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4352</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">20.280,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4357</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">192.660,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4204</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">845.000,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4356</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">101.400,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4202</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">338.000,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4203</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">591.500,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4206</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">54.080,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4208</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">67.600,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4209</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">3.042.000,00</span>
-                            </td>
-                        </tr>
-                        
-                        
-                        <tr>
-                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4217</td>
-                            <td class="monetary">
-                                <span class="sign"></span>
-                                <span class="currency">R$</span>
-                                <span class="value" style="width: 13ch;">6.912.100,00</span>
                             </td>
                         </tr>
                         
@@ -5035,11 +4935,91 @@
                         
                         
                         <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4209</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">3.042.000,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4208</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">67.600,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4206</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">54.080,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4204</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">845.000,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4203</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">591.500,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4202</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">338.000,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
                             <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4205</td>
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
                                 <span class="value" style="width: 13ch;">263.640,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4217</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">6.912.100,00</span>
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td class="desc">COPASUL COOPERATIVA AGRICOLA SUL MATOGROSSENSE | PV 4357</td>
+                            <td class="monetary">
+                                <span class="sign"></span>
+                                <span class="currency">R$</span>
+                                <span class="value" style="width: 13ch;">192.660,00</span>
                             </td>
                         </tr>
                         
@@ -5075,7 +5055,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">30.246.170,39</span>
+                <span class="value">30.179.902,38</span>
             </div>
         </div>
 
@@ -5130,7 +5110,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">28.952.635,74</span>
+                <span class="value">28.887.663,73</span>
             </div>
         </div>
 
@@ -5158,7 +5138,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.293.534,65</span>
+                                <span class="value" style="width: 12ch;">1.292.238,65</span>
                             </td>
                         </tr>
                         
@@ -5168,7 +5148,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.293.534,65</span>
+                                <span class="value" style="width: 12ch;">1.292.238,65</span>
                             </td>
                         </tr>
                     </table>
@@ -5185,7 +5165,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">22.940.423,45</span>
+                <span class="value">22.881.492,29</span>
             </div>
         </div>
 
@@ -5209,21 +5189,21 @@
                         
                         
                         <tr>
-                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 726</td>
+                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 802</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">638.349,73</span>
+                                <span class="value" style="width: 12ch;">433.815,20</span>
                             </td>
                         </tr>
                         
                         
                         <tr>
-                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 802</td>
+                            <td class="desc">AMS AMEROPA MARKETING AND SALES AG | PC 726</td>
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">434.251,52</span>
+                                <span class="value" style="width: 12ch;">637.708,34</span>
                             </td>
                         </tr>
                         
@@ -5233,7 +5213,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">4.939.611,04</span>
+                                <span class="value" style="width: 12ch;">4.934.647,90</span>
                             </td>
                         </tr>
                         
@@ -5243,7 +5223,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">6.012.212,29</span>
+                                <span class="value" style="width: 12ch;">6.006.171,44</span>
                             </td>
                         </tr>
                     </table>
@@ -5260,7 +5240,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.569.951,45</span>
+                <span class="value">21.512.397,29</span>
             </div>
         </div>
 
@@ -5288,7 +5268,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.370.472,00</span>
+                                <span class="value" style="width: 12ch;">1.369.095,00</span>
                             </td>
                         </tr>
                         
@@ -5298,7 +5278,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.370.472,00</span>
+                                <span class="value" style="width: 12ch;">1.369.095,00</span>
                             </td>
                         </tr>
                     </table>
@@ -5315,7 +5295,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.569.908,28</span>
+                <span class="value">21.512.354,12</span>
             </div>
         </div>
 
@@ -5370,7 +5350,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.236.574,95</span>
+                <span class="value">21.179.020,79</span>
             </div>
         </div>
 
@@ -5425,7 +5405,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.236.274,95</span>
+                <span class="value">21.178.720,79</span>
             </div>
         </div>
 
@@ -5480,7 +5460,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.184.001,11</span>
+                <span class="value">21.126.446,95</span>
             </div>
         </div>
 
@@ -5535,7 +5515,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.794.781,11</span>
+                <span class="value">21.735.809,45</span>
             </div>
         </div>
 
@@ -5554,7 +5534,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.410.780,00</span>
+                                <span class="value" style="width: 12ch;">1.409.362,50</span>
                             </td>
                         </tr>
                         
@@ -5584,7 +5564,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.610.780,00</span>
+                                <span class="value" style="width: 12ch;">1.609.362,50</span>
                             </td>
                         </tr>
                     </table>
@@ -5631,7 +5611,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.790.643,69</span>
+                <span class="value">21.731.672,03</span>
             </div>
         </div>
 
@@ -5686,7 +5666,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.779.913,69</span>
+                <span class="value">21.720.942,03</span>
             </div>
         </div>
 
@@ -5741,7 +5721,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.777.619,09</span>
+                <span class="value">21.718.647,43</span>
             </div>
         </div>
 
@@ -5796,7 +5776,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.771.476,99</span>
+                <span class="value">21.712.505,33</span>
             </div>
         </div>
 
@@ -5851,7 +5831,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.771.433,82</span>
+                <span class="value">21.712.462,16</span>
             </div>
         </div>
 
@@ -5906,7 +5886,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.438.100,49</span>
+                <span class="value">21.379.128,83</span>
             </div>
         </div>
 
@@ -5961,7 +5941,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.437.800,49</span>
+                <span class="value">21.378.828,83</span>
             </div>
         </div>
 
@@ -6016,7 +5996,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.867.752,49</span>
+                <span class="value">21.808.348,83</span>
             </div>
         </div>
 
@@ -6035,7 +6015,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">429.952,00</span>
+                                <span class="value" style="width: 10ch;">429.520,00</span>
                             </td>
                         </tr>
                         
@@ -6045,7 +6025,7 @@
                             <td class="monetary">
                                 <span class="sign"></span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 10ch;">429.952,00</span>
+                                <span class="value" style="width: 10ch;">429.520,00</span>
                             </td>
                         </tr>
                     </table>
@@ -6071,7 +6051,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">22.015.478,65</span>
+                <span class="value">21.956.074,99</span>
             </div>
         </div>
 
@@ -6147,7 +6127,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">22.004.748,65</span>
+                <span class="value">21.945.344,99</span>
             </div>
         </div>
 
@@ -6202,7 +6182,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">22.002.454,05</span>
+                <span class="value">21.943.050,39</span>
             </div>
         </div>
 
@@ -6257,7 +6237,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.996.311,95</span>
+                <span class="value">21.936.908,29</span>
             </div>
         </div>
 
@@ -6312,7 +6292,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.996.268,78</span>
+                <span class="value">21.936.865,12</span>
             </div>
         </div>
 
@@ -6367,7 +6347,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.662.935,45</span>
+                <span class="value">21.603.531,79</span>
             </div>
         </div>
 
@@ -6422,7 +6402,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.662.635,45</span>
+                <span class="value">21.603.231,79</span>
             </div>
         </div>
 
@@ -6477,7 +6457,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.862.635,45</span>
+                <span class="value">21.803.231,79</span>
             </div>
         </div>
 
@@ -6532,7 +6512,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.860.340,85</span>
+                <span class="value">21.800.937,19</span>
             </div>
         </div>
 
@@ -6587,7 +6567,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.854.198,75</span>
+                <span class="value">21.794.795,09</span>
             </div>
         </div>
 
@@ -6642,7 +6622,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.854.155,58</span>
+                <span class="value">21.794.751,92</span>
             </div>
         </div>
 
@@ -6697,7 +6677,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.520.822,25</span>
+                <span class="value">21.461.418,59</span>
             </div>
         </div>
 
@@ -6752,7 +6732,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.520.522,25</span>
+                <span class="value">21.461.118,59</span>
             </div>
         </div>
 
@@ -6807,7 +6787,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.720.522,25</span>
+                <span class="value">21.661.118,59</span>
             </div>
         </div>
 
@@ -6862,7 +6842,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.718.227,65</span>
+                <span class="value">21.658.823,99</span>
             </div>
         </div>
 
@@ -6917,7 +6897,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.715.549,89</span>
+                <span class="value">21.656.146,23</span>
             </div>
         </div>
 
@@ -6972,7 +6952,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">21.382.216,56</span>
+                <span class="value">21.322.812,90</span>
             </div>
         </div>
 
@@ -7027,7 +7007,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.938.250,02</span>
+                <span class="value">19.880.296,90</span>
             </div>
         </div>
 
@@ -7055,7 +7035,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.443.966,54</span>
+                                <span class="value" style="width: 12ch;">1.442.516,00</span>
                             </td>
                         </tr>
                         
@@ -7065,7 +7045,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.443.966,54</span>
+                                <span class="value" style="width: 12ch;">1.442.516,00</span>
                             </td>
                         </tr>
                     </table>
@@ -7082,7 +7062,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">20.138.250,02</span>
+                <span class="value">20.080.296,90</span>
             </div>
         </div>
 
@@ -7137,7 +7117,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">20.135.955,42</span>
+                <span class="value">20.078.002,30</span>
             </div>
         </div>
 
@@ -7192,7 +7172,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">20.133.277,66</span>
+                <span class="value">20.075.324,54</span>
             </div>
         </div>
 
@@ -7247,7 +7227,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.799.944,33</span>
+                <span class="value">19.741.991,21</span>
             </div>
         </div>
 
@@ -7302,7 +7282,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.799.644,33</span>
+                <span class="value">19.741.691,21</span>
             </div>
         </div>
 
@@ -7357,7 +7337,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.999.644,33</span>
+                <span class="value">19.941.691,21</span>
             </div>
         </div>
 
@@ -7412,7 +7392,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.997.349,73</span>
+                <span class="value">19.939.396,61</span>
             </div>
         </div>
 
@@ -7467,7 +7447,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.994.671,97</span>
+                <span class="value">19.936.718,85</span>
             </div>
         </div>
 
@@ -7522,7 +7502,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.661.338,64</span>
+                <span class="value">19.603.385,52</span>
             </div>
         </div>
 
@@ -7577,7 +7557,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.661.038,64</span>
+                <span class="value">19.603.085,52</span>
             </div>
         </div>
 
@@ -7632,7 +7612,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.861.038,64</span>
+                <span class="value">19.803.085,52</span>
             </div>
         </div>
 
@@ -7687,7 +7667,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.858.744,04</span>
+                <span class="value">19.800.790,92</span>
             </div>
         </div>
 
@@ -7742,7 +7722,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.856.066,28</span>
+                <span class="value">19.798.113,16</span>
             </div>
         </div>
 
@@ -7797,7 +7777,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.522.732,95</span>
+                <span class="value">19.464.779,83</span>
             </div>
         </div>
 
@@ -7852,7 +7832,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.522.432,95</span>
+                <span class="value">19.464.479,83</span>
             </div>
         </div>
 
@@ -7907,7 +7887,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.583.632,95</span>
+                <span class="value">19.525.679,83</span>
             </div>
         </div>
 
@@ -7962,7 +7942,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.581.338,35</span>
+                <span class="value">19.523.385,23</span>
             </div>
         </div>
 
@@ -8017,7 +7997,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.578.660,59</span>
+                <span class="value">19.520.707,47</span>
             </div>
         </div>
 
@@ -8072,7 +8052,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.245.327,26</span>
+                <span class="value">19.187.374,14</span>
             </div>
         </div>
 
@@ -8127,7 +8107,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.245.027,26</span>
+                <span class="value">19.187.074,14</span>
             </div>
         </div>
 
@@ -8182,7 +8162,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.242.732,66</span>
+                <span class="value">19.184.779,54</span>
             </div>
         </div>
 
@@ -8237,7 +8217,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">19.240.054,90</span>
+                <span class="value">19.182.101,78</span>
             </div>
         </div>
 
@@ -8292,7 +8272,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">18.906.721,57</span>
+                <span class="value">18.848.768,45</span>
             </div>
         </div>
 
@@ -8347,7 +8327,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">18.904.426,97</span>
+                <span class="value">18.846.473,85</span>
             </div>
         </div>
 
@@ -8402,7 +8382,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">18.901.749,21</span>
+                <span class="value">18.843.796,09</span>
             </div>
         </div>
 
@@ -8457,7 +8437,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">18.568.415,88</span>
+                <span class="value">18.510.462,76</span>
             </div>
         </div>
 
@@ -8512,7 +8492,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.167.282,01</span>
+                <span class="value">17.110.736,70</span>
             </div>
         </div>
 
@@ -8540,7 +8520,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.401.133,87</span>
+                                <span class="value" style="width: 12ch;">1.399.726,06</span>
                             </td>
                         </tr>
                         
@@ -8550,7 +8530,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.401.133,87</span>
+                                <span class="value" style="width: 12ch;">1.399.726,06</span>
                             </td>
                         </tr>
                     </table>
@@ -8567,7 +8547,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.164.987,41</span>
+                <span class="value">17.108.442,10</span>
             </div>
         </div>
 
@@ -8622,7 +8602,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">17.162.309,65</span>
+                <span class="value">17.105.764,34</span>
             </div>
         </div>
 
@@ -8677,7 +8657,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.828.976,32</span>
+                <span class="value">16.772.431,01</span>
             </div>
         </div>
 
@@ -8732,7 +8712,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.826.681,72</span>
+                <span class="value">16.770.136,41</span>
             </div>
         </div>
 
@@ -8787,7 +8767,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.824.003,96</span>
+                <span class="value">16.767.458,65</span>
             </div>
         </div>
 
@@ -8842,7 +8822,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.821.709,36</span>
+                <span class="value">16.765.164,05</span>
             </div>
         </div>
 
@@ -8897,7 +8877,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.819.031,60</span>
+                <span class="value">16.762.486,29</span>
             </div>
         </div>
 
@@ -8952,7 +8932,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.816.737,00</span>
+                <span class="value">16.760.191,69</span>
             </div>
         </div>
 
@@ -9007,7 +8987,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.814.059,24</span>
+                <span class="value">16.757.513,93</span>
             </div>
         </div>
 
@@ -9062,7 +9042,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.811.764,64</span>
+                <span class="value">16.755.219,33</span>
             </div>
         </div>
 
@@ -9117,7 +9097,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.809.086,88</span>
+                <span class="value">16.752.541,57</span>
             </div>
         </div>
 
@@ -9172,7 +9152,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.806.792,28</span>
+                <span class="value">16.750.246,97</span>
             </div>
         </div>
 
@@ -9227,7 +9207,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">16.804.114,52</span>
+                <span class="value">16.747.569,21</span>
             </div>
         </div>
 
@@ -9282,7 +9262,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.451.116,47</span>
+                <span class="value">15.395.930,61</span>
             </div>
         </div>
 
@@ -9310,7 +9290,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.352.998,05</span>
+                                <span class="value" style="width: 12ch;">1.351.638,61</span>
                             </td>
                         </tr>
                         
@@ -9320,7 +9300,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.352.998,05</span>
+                                <span class="value" style="width: 12ch;">1.351.638,61</span>
                             </td>
                         </tr>
                     </table>
@@ -9337,7 +9317,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.448.821,87</span>
+                <span class="value">15.393.636,01</span>
             </div>
         </div>
 
@@ -9392,7 +9372,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.446.144,11</span>
+                <span class="value">15.390.958,25</span>
             </div>
         </div>
 
@@ -9447,7 +9427,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.443.849,51</span>
+                <span class="value">15.388.663,65</span>
             </div>
         </div>
 
@@ -9502,7 +9482,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.441.171,75</span>
+                <span class="value">15.385.985,89</span>
             </div>
         </div>
 
@@ -9557,7 +9537,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.438.877,15</span>
+                <span class="value">15.383.691,29</span>
             </div>
         </div>
 
@@ -9612,7 +9592,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.436.199,39</span>
+                <span class="value">15.381.013,53</span>
             </div>
         </div>
 
@@ -9667,7 +9647,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.433.904,79</span>
+                <span class="value">15.378.718,93</span>
             </div>
         </div>
 
@@ -9722,7 +9702,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.431.227,03</span>
+                <span class="value">15.376.041,17</span>
             </div>
         </div>
 
@@ -9777,7 +9757,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.428.932,43</span>
+                <span class="value">15.373.746,57</span>
             </div>
         </div>
 
@@ -9832,7 +9812,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.426.254,67</span>
+                <span class="value">15.371.068,81</span>
             </div>
         </div>
 
@@ -9887,7 +9867,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.423.960,07</span>
+                <span class="value">15.368.774,21</span>
             </div>
         </div>
 
@@ -9942,7 +9922,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">15.421.282,31</span>
+                <span class="value">15.366.096,45</span>
             </div>
         </div>
 
@@ -9997,7 +9977,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.110.816,99</span>
+                <span class="value">14.056.947,83</span>
             </div>
         </div>
 
@@ -10025,7 +10005,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.310.465,32</span>
+                                <span class="value" style="width: 12ch;">1.309.148,61</span>
                             </td>
                         </tr>
                         
@@ -10035,7 +10015,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.310.465,32</span>
+                                <span class="value" style="width: 12ch;">1.309.148,61</span>
                             </td>
                         </tr>
                     </table>
@@ -10052,7 +10032,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.108.522,39</span>
+                <span class="value">14.054.653,23</span>
             </div>
         </div>
 
@@ -10107,7 +10087,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.105.844,63</span>
+                <span class="value">14.051.975,47</span>
             </div>
         </div>
 
@@ -10162,7 +10142,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.103.550,03</span>
+                <span class="value">14.049.680,87</span>
             </div>
         </div>
 
@@ -10217,7 +10197,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.100.872,27</span>
+                <span class="value">14.047.003,11</span>
             </div>
         </div>
 
@@ -10272,7 +10252,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.098.577,67</span>
+                <span class="value">14.044.708,51</span>
             </div>
         </div>
 
@@ -10327,7 +10307,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.096.283,07</span>
+                <span class="value">14.042.413,91</span>
             </div>
         </div>
 
@@ -10382,7 +10362,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.093.988,47</span>
+                <span class="value">14.040.119,31</span>
             </div>
         </div>
 
@@ -10437,7 +10417,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">14.091.693,87</span>
+                <span class="value">14.037.824,71</span>
             </div>
         </div>
 
@@ -10492,7 +10472,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.831.401,86</span>
+                <span class="value">12.778.798,99</span>
             </div>
         </div>
 
@@ -10520,7 +10500,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.260.292,02</span>
+                                <span class="value" style="width: 12ch;">1.259.025,72</span>
                             </td>
                         </tr>
                         
@@ -10530,7 +10510,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.260.292,02</span>
+                                <span class="value" style="width: 12ch;">1.259.025,72</span>
                             </td>
                         </tr>
                     </table>
@@ -10547,7 +10527,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.829.107,26</span>
+                <span class="value">12.776.504,39</span>
             </div>
         </div>
 
@@ -10602,7 +10582,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.826.812,66</span>
+                <span class="value">12.774.209,79</span>
             </div>
         </div>
 
@@ -10657,7 +10637,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.824.518,06</span>
+                <span class="value">12.771.915,19</span>
             </div>
         </div>
 
@@ -10712,7 +10692,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.822.223,46</span>
+                <span class="value">12.769.620,59</span>
             </div>
         </div>
 
@@ -10767,7 +10747,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">12.819.928,86</span>
+                <span class="value">12.767.325,99</span>
             </div>
         </div>
 
@@ -10822,7 +10802,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">11.604.461,70</span>
+                <span class="value">11.553.080,09</span>
             </div>
         </div>
 
@@ -10850,7 +10830,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.215.467,16</span>
+                                <span class="value" style="width: 12ch;">1.214.245,90</span>
                             </td>
                         </tr>
                         
@@ -10860,7 +10840,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.215.467,16</span>
+                                <span class="value" style="width: 12ch;">1.214.245,90</span>
                             </td>
                         </tr>
                     </table>
@@ -10877,7 +10857,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">10.437.385,05</span>
+                <span class="value">10.387.176,08</span>
             </div>
         </div>
 
@@ -10905,7 +10885,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.167.076,65</span>
+                                <span class="value" style="width: 12ch;">1.165.904,01</span>
                             </td>
                         </tr>
                         
@@ -10915,7 +10895,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.167.076,65</span>
+                                <span class="value" style="width: 12ch;">1.165.904,01</span>
                             </td>
                         </tr>
                     </table>
@@ -10932,7 +10912,7 @@
                 
                 <span class="sign"></span>
                 <span class="currency">R$</span>
-                <span class="value">9.315.897,34</span>
+                <span class="value">9.266.815,20</span>
             </div>
         </div>
 
@@ -10960,7 +10940,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.121.487,71</span>
+                                <span class="value" style="width: 12ch;">1.120.360,88</span>
                             </td>
                         </tr>
                         
@@ -10970,7 +10950,7 @@
                             <td class="monetary">
                                 <span class="sign">-</span>
                                 <span class="currency">R$</span>
-                                <span class="value" style="width: 12ch;">1.121.487,71</span>
+                                <span class="value" style="width: 12ch;">1.120.360,88</span>
                             </td>
                         </tr>
                     </table>
@@ -10982,8 +10962,8 @@
 
     <!-- RODAPÉ -->
     <div class="footer">
-        <p>Relatório gerado automaticamente por FluxoCaixaProcessor</p>
-        <p>© 28/1 - Todos os direitos reservados</p>
+        <p>Relatório gerado automaticamente com base no arquivo 'CashFlow Financeiro' mantido no Google Drive.</p>
+        <p><br>BI Novafertil | 2025.</p>
     </div>
 </body>
 </html>
