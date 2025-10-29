@@ -81,16 +81,20 @@ class CashFlowPDFGenerator:
     @staticmethod
     def _format_currency_accounting(value: float) -> Dict[str, str]:
         """
-        Formata valor monetário em estilo contábil (moeda e valor separados)
-        Retorna dicionário com 'currency' e 'value' para alinhamento perfeito
+        Formata valor monetário em estilo contábil (sinal, moeda e valor separados)
+        Retorna dicionário com 'sign', 'currency' e 'value' para alinhamento perfeito
         """
         if pd.isna(value):
-            return {'currency': 'R$', 'value': '0,00'}
+            return {'sign': '', 'currency': 'R$', 'value': '0,00'}
 
-        # Formatar valor no padrão brasileiro
-        formatted = f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        # Determinar sinal
+        sign = '-' if value < 0 else ''
 
-        return {'currency': 'R$', 'value': formatted}
+        # Formatar valor absoluto no padrão brasileiro
+        abs_value = abs(value)
+        formatted = f"{abs_value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+        return {'sign': sign, 'currency': 'R$', 'value': formatted}
 
     @staticmethod
     def _format_date(date: pd.Timestamp) -> str:

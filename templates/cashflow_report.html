@@ -135,8 +135,22 @@
             gap: 3px;
         }
 
+        .saldo-base-value .sign {
+            display: inline-block;
+            min-width: 8px;
+            text-align: right;
+            font-size: 14pt;
+        }
+
         .saldo-base-value .currency {
+            display: inline-block;
+            min-width: 24px;
+            text-align: left;
             font-size: 10pt;
+        }
+
+        .saldo-base-value .value {
+            text-align: right;
         }
 
         .report-info {
@@ -286,6 +300,7 @@
             align-items: center;
             margin-bottom: 10px;
             padding-bottom: 1px;
+            padding-right: 7.5px;
             border-bottom: 1px solid #d0d0d0;
         }
 
@@ -308,10 +323,18 @@
             gap: 3px;
             white-space: nowrap;
             flex-shrink: 0;
-            margin-left: 5px;
+            margin-left: 1px;
+        }
+
+        .day-total .sign {
+            display: inline-block;
+            min-width: 7px;
+            text-align: right;
         }
 
         .day-total .currency {
+            display: inline-block;
+            min-width: 20px;
             text-align: left;
         }
 
@@ -364,16 +387,32 @@
             overflow-wrap: break-word;
         }
 
-        .transaction-table td.currency {
-            text-align: left;
-            padding-right: 3px;
+        .transaction-table td.monetary {
+            display: flex;
+            align-items: baseline;
+            justify-content: flex-end;
+            gap: 3px;
             white-space: nowrap;
         }
 
-        .transaction-table td.value {
+        .transaction-table .sign {
+            display: inline-block;
+            width: 6px;
             text-align: right;
-            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .transaction-table .currency {
+            display: inline-block;
+            width: 18px;
+            text-align: left;
+            flex-shrink: 0;
+        }
+
+        .transaction-table .value {
+            text-align: right;
             font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
         }
 
         /* Linha de total dentro da tabela */
@@ -383,11 +422,18 @@
 
         .transaction-table tr.total-row td {
             padding-top: 8px;
+        }
+
+        .transaction-table tr.total-row .sign,
+        .transaction-table tr.total-row .currency,
+        .transaction-table tr.total-row .value {
             font-weight: 600;
             color: #333;
         }
 
-        .transaction-table tr.total-row.total-row-negative td {
+        .transaction-table tr.total-row.total-row-negative .sign,
+        .transaction-table tr.total-row.total-row-negative .currency,
+        .transaction-table tr.total-row.total-row-negative .value {
             color: #d32f2f;
         }
 
@@ -517,6 +563,7 @@
                     <div class="saldo-base-label">Saldo bancário base</div>
                     <div class="saldo-base-value">
                         {% set saldo_fmt = saldo_base|format_currency_accounting %}
+                        <span class="sign">{{ saldo_fmt.sign }}</span>
                         <span class="currency">{{ saldo_fmt.currency }}</span>
                         <span class="value">{{ saldo_fmt.value }}</span>
                     </div>
@@ -533,6 +580,7 @@
             <div class="day-date">{{ dia.data }}</div>
             <div class="day-total">
                 {% set saldo_fmt = dia.saldo_final|format_currency_accounting %}
+                <span class="sign">{{ saldo_fmt.sign }}</span>
                 <span class="currency">{{ saldo_fmt.currency }}</span>
                 <span class="value">{{ saldo_fmt.value }}</span>
             </div>
@@ -550,15 +598,21 @@
                         {% set valor_fmt = transacao.valor|format_currency_accounting %}
                         <tr>
                             <td class="desc">{{ transacao.descricao }}</td>
-                            <td class="currency">{{ valor_fmt.currency }}</td>
-                            <td class="value" style="width: {{ dia.max_width_entradas }}ch;">{{ valor_fmt.value }}</td>
+                            <td class="monetary">
+                                <span class="sign">{{ valor_fmt.sign }}</span>
+                                <span class="currency">{{ valor_fmt.currency }}</span>
+                                <span class="value" style="width: {{ dia.max_width_entradas }}ch;">{{ valor_fmt.value }}</span>
+                            </td>
                         </tr>
                         {% endfor %}
                         <tr class="total-row">
                             <td class="desc"></td>
                             {% set total_fmt = dia.total_entradas|format_currency_accounting %}
-                            <td class="currency total-currency">{{ total_fmt.currency }}</td>
-                            <td class="value total-value" style="width: {{ dia.max_width_entradas }}ch;">{{ total_fmt.value }}</td>
+                            <td class="monetary">
+                                <span class="sign">{{ total_fmt.sign }}</span>
+                                <span class="currency">{{ total_fmt.currency }}</span>
+                                <span class="value" style="width: {{ dia.max_width_entradas }}ch;">{{ total_fmt.value }}</span>
+                            </td>
                         </tr>
                     </table>
                 {% else %}
@@ -576,15 +630,21 @@
                         {% set valor_fmt = transacao.valor|format_currency_accounting %}
                         <tr>
                             <td class="desc">{{ transacao.descricao }}</td>
-                            <td class="currency">- {{ valor_fmt.currency }}</td>
-                            <td class="value" style="width: {{ dia.max_width_saidas }}ch;">{{ valor_fmt.value }}</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">{{ valor_fmt.currency }}</span>
+                                <span class="value" style="width: {{ dia.max_width_saidas }}ch;">{{ valor_fmt.value }}</span>
+                            </td>
                         </tr>
                         {% endfor %}
                         <tr class="total-row total-row-negative">
                             <td class="desc"></td>
                             {% set total_fmt = dia.total_saidas|format_currency_accounting %}
-                            <td class="currency total-currency">- {{ total_fmt.currency }}</td>
-                            <td class="value total-value" style="width: {{ dia.max_width_saidas }}ch;">{{ total_fmt.value }}</td>
+                            <td class="monetary">
+                                <span class="sign">-</span>
+                                <span class="currency">{{ total_fmt.currency }}</span>
+                                <span class="value" style="width: {{ dia.max_width_saidas }}ch;">{{ total_fmt.value }}</span>
+                            </td>
                         </tr>
                     </table>
                 {% else %}
